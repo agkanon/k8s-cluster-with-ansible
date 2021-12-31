@@ -61,14 +61,8 @@
       mkdir -p /etc/systemd/system/docker.service.d
 
 - name: Creating a daemon json config file
-    file:
-     path: /etc/docker/daemon.json
-     state: touch
-
-  - name: Adding json config details
-    blockinfile:
-     path: /etc/docker/daemon.json
-     block: |
+    shell: |
+        tee /etc/docker/daemon.json <<EOF
         {
           "exec-opts": ["native.cgroupdriver=systemd"],
           "log-driver": "json-file",
@@ -80,6 +74,9 @@
             "overlay2.override_kernel_check=true"
           ]
         }
+        EOF
+
+
   - name: Start and enable Docker and kublet
     shell: |
       systemctl daemon-reload 
