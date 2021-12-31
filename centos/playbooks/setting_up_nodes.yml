@@ -44,4 +44,23 @@
 
   - name: Enabling Bridge Firewall Rule
     shell: "echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables"
+ 
 
+  - name: Creating a Kernel configuration file for Kubernetes
+    file:
+     path: /etc/sysctl.d/kubernetes.conf
+     state: touch
+  
+  - name: Kernel parameter as required by Kubernetes
+    blockinfile:
+     path: /etc/sysctl.d/kubernetes.conf
+     block: |
+           net.ipv4.ip_forward = 1
+           net.bridge.bridge-nf-call-ip6tables = 1
+           net.bridge.bridge-nf-call-iptables = 1
+
+
+  - name: Reload Kernel parameter configuration files
+    shell: |
+      modprobe br_netfilter
+      sysctl --system
