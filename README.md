@@ -14,7 +14,7 @@ Internet connection must be enabled in all nodes, required packages will be down
 
 Clone this repository into your master node.
 
-git clone 
+git clone https://github.com/agkanon143/k8s_cluster_with_ansible.git
 
 once it is cloned, get into the directory
 
@@ -29,6 +29,8 @@ Deploy the ssh key from master node to other nodes for password less authenticat
 ssh-keygen
 
 Copy the public key to all nodes including your master node and make sure you are able to login into any nodes without password.
+
+ssh-copy-id user@node
 
 Run "settingup_kubernetes_cluster.yml" playbook to setup all nodes and kubernetes master configuration.
 
