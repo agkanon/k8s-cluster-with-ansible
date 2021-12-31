@@ -1,4 +1,4 @@
-# k8s_cluster_with_ansible
+# k8s_cluster_with_ansible_
 
 This repository has set of ansible playbooks created to setup a kubernetes cluster fully automated with one master and multiple worker nodes. This will work on physical servers, virtual machines, aws cloud, google cloud or any other cloud servers. This has been tested and verified on Centos 7.3 64 bit operating systems. 
 
