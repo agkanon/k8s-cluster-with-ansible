@@ -28,9 +28,6 @@
   - name: SELinux Configuration
     shell: sed -i 's/^SELINUX=.*/SELINUX=permissive/g' /etc/selinux/config
     
-  - name: Enabling Bridge Firewall Rule
-    shell: "echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables"
- 
   - name: Creating a Kernel configuration file for Kubernetes
     file:
      path: /etc/sysctl.d/kubernetes.conf
@@ -60,47 +57,11 @@
       mkdir /etc/docker
       mkdir -p /etc/systemd/system/docker.service.d
 
-
-  - name: Check that the /etc/docker/daemon.json exists
-    stat:
-      path: /etc/docker/daemon.json
-    register: stat_result
-
-  - block:
-    - name: load var from file
-      slurp:
-        src: /etc/docker/daemon.json
-      register: docker_vars
-
-    - debug:
-        msg: "{{ docker_vars.content|b64decode|from_json }}"
-
-    - name: append more key/values
-      set_fact:
-        docker_vars: "{{ docker_vars.content|b64decode|from_json }}"
-
-
-    - name: append more key/values
-      set_fact:
-        docker_vars: "{{ docker_vars | default([]) | combine({ item.key : item.value }) }}"
-      with_items:
-      - { key: "exec-opts", value: ["native.cgroupdriver=systemd"] }
-      - { key: "log-driver", value:  "json-file" }
-      - { key: "log-opts", value: "max-size": "100m" }
-      - { key: "storage-driver", value:  "overlay2" }
-      - { key: "storage-opts", value: "overlay2.override_kernel_check=true" }
-      
-
-
-    - debug:
-        var: docker_vars
-
-    - name: write var to file
-      copy:
-        content: "{{ docker_vars | to_nice_json }}"
-        dest: /etc/docker/daemon.json
-    when: stat_result.stat.exists == true
-
+   - name: Deploy Docker daemon.json.
+    copy:
+      src: centos/daemon.json
+      dest: /etc/docker/daemon.json
+  
   - name: Start and enable Docker and kublet
     shell: |
       systemctl daemon-reload 
