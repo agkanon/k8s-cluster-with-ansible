@@ -25,13 +25,12 @@
     shell: yum -y install epel-release vim git curl wget kubelet kubeadm kubectl --disableexcludes=kubernetes
 
 
-  - name: Enabling Bridge Firewall Rule
-    shell: "echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables"
+  - name: SELinux Configuration
+    shell: sed -i 's/^SELINUX=.*/SELINUX=permissive/g' /etc/selinux/config
     
   - name: Enabling Bridge Firewall Rule
     shell: "echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables"
  
-
   - name: Creating a Kernel configuration file for Kubernetes
     file:
      path: /etc/sysctl.d/kubernetes.conf
@@ -45,8 +44,45 @@
            net.bridge.bridge-nf-call-ip6tables = 1
            net.bridge.bridge-nf-call-iptables = 1
 
-
   - name: Reload Kernel parameter configuration files
     shell: |
       modprobe br_netfilter
       sysctl --system
+
+  - name: Reload Kernel parameter configuration files
+    shell: |
+      yum install -y yum-utils device-mapper-persistent-data lvm2
+      yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+      yum install -y docker-ce docker-ce-cli containerd.io
+  
+  - name: Reload Kernel parameter configuration files
+    shell: |
+      mkdir /etc/docker
+      mkdir -p /etc/systemd/system/docker.service.d
+
+- name: Creating a daemon json config file
+    file:
+     path: /etc/docker/daemon.json
+     state: touch
+
+  - name: Adding json config details
+    blockinfile:
+     path: /etc/docker/daemon.json
+     block: |
+        {
+          "exec-opts": ["native.cgroupdriver=systemd"],
+          "log-driver": "json-file",
+          "log-opts": {
+            "max-size": "100m"
+          },
+          "storage-driver": "overlay2",
+          "storage-opts": [
+            "overlay2.override_kernel_check=true"
+          ]
+        }
+  - name: Start and enable Docker and kublet
+    shell: |
+      systemctl daemon-reload 
+      systemctl restart docker
+      systemctl enable docker
+      systemctl enable kubelet
