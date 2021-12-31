@@ -57,8 +57,9 @@
 
   - name: Deploy Docker daemon file
     copy:
-      src: centos/daemon.json
-      dest: /etc/docker/daemon.json
+      src: file/daemon.json
+      dest: /etc/docker/
+      flat: yes
   
   - name: Start and enable Docker and kublet
     shell: |
