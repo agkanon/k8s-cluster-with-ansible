@@ -3,6 +3,12 @@
   vars_files:
   - env_variables 
   tasks:
+  - name: Configure Firewalld Service Port for Master Node
+    shell: |
+      firewall-cmd --add-port={6443,2379-2380,10250,10251,10252,5473,179,5473}/tcp --permanent
+      firewall-cmd --add-port={4789,8285,8472}/udp --permanent
+      firewall-cmd --reload
+  
   - name: Pulling images required for setting up a Kubernetes cluster
     shell: kubeadm config images pull
 

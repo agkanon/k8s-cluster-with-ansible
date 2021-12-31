@@ -3,6 +3,12 @@
   vars_files:
   - env_variables
   tasks:
+  - name: Configure Firewalld Service Port for Worker Node
+    shell: |
+      firewall-cmd --add-port={10250,30000-32767,5473,179,5473}/tcp --permanent
+      firewall-cmd --add-port={4789,8285,8472}/udp --permanent
+      firewall-cmd --reload
+  
   - name: Copying token to worker nodes
     copy: src={{ token_file }} dest=join_token
 
