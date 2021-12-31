@@ -57,7 +57,7 @@
       mkdir /etc/docker
       mkdir -p /etc/systemd/system/docker.service.d
 
-   - name: Deploy Docker daemon file
+  - name: Deploy Docker daemon file
     copy:
       src: centos/daemon.json
       dest: /etc/docker/daemon.json
