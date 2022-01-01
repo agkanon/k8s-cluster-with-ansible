@@ -2,39 +2,38 @@
 - hosts: kubernetes-master-nodes
   tasks:
   - name: Configure Firewalld Service Port for Worker Node
-    shell: |
-      firewall-cmd --add-port={6443,2379-2380,10250,10251,10252,5473,179,5473}/tcp --permanent
-      firewall-cmd --add-port={4789,8285,8472}/udp --permanent
-      firewall-cmd --reload
+      shell: |
+        firewall-cmd --add-port={6443,2379-2380,10250,10251,10252,5473,179,5473}/tcp --permanent
+        firewall-cmd --add-port={4789,8285,8472}/udp --permanent
+        firewall-cmd --reload
 
   - name: Pulling images required for setting up a Kubernetes cluster
-    shell: kubeadm config images pull
+      shell: kubeadm config images pull
 
   - name: Initializing Kubernetes cluster
-    shell: kubeadm init --apiserver-advertise-address=192.168.30.241 --pod-network-cidr=10.244.0.0/16
+      shell: kubeadm init --apiserver-advertise-address=192.168.30.241 --pod-network-cidr=10.244.0.0/16
     args:
         chdir: $HOME
         creates: cluster_initialized.txt
 
   - name: Copying required files
-    shell: |
-     mkdir -p $HOME/.kube
-     cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-     chown $(id -u):$(id -g) $HOME/.kube/config
+      shell: |
+        mkdir -p $HOME/.kube
+        cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+        chown $(id -u):$(id -g) $HOME/.kube/config
 
   - name: Install POD Network 
-    shell: kubectl apply -f https://docs.projectcalico.org/manifests/tigera-operator.yaml 
+      shell: kubectl apply -f https://docs.projectcalico.org/manifests/tigera-operator.yaml 
     args:
       chdir: $HOME
 
   - name: Get the token for joining the worker nodes
-    shell: "{{ item }}"
-    register: kubernetes_join_command
-    with_items:
-      - "kubeadm token create  --print-join-command"
+      become: yes
+      shell: kubeadm token create  --print-join-command
+      register: kubernetes_join_command
 
     debug:
-       msg: "{{ kubernetes_join_command.stdout }}"
+      msg: "{{ kubernetes_join_command.stdout }}"
 
   - name: Copy join command to local file.
     local_action: copy content="{{ kubernetes_join_command.stdout_lines[0] }}" dest="/tmp/kubernetes_join_command" mode=0777
