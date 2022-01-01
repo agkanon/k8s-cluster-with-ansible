@@ -11,12 +11,7 @@
     shell: kubeadm config images pull
 
   - name: Initializing Kubernetes cluster
-    shell: kubeadm init \
-    --apiserver-advertise-address=192.168.30.241 \
-    --pod-network-cidr=10.244.0.0/16 \
-    --docker-socket /var/run/docker.sock \
-    --upload-certs \
-    --control-plane-endpoint=k8master
+    shell: kubeadm init --apiserver-advertise-address=192.168.30.241 --pod-network-cidr=10.244.0.0/16 --docker-socket /var/run/docker.sock --upload-certs --control-plane-endpoint=k8master
     args:
       chdir: $HOME
       creates: cluster_initialized.txt
