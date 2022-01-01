@@ -1,6 +1,8 @@
 ---
 - hosts: kubernetes-master-nodes
   tasks:
+  - name: Configure Firewalld Service Port for Worker Node
+    shell: |
       firewall-cmd --add-port={6443,2379-2380,10250,10251,10252,5473,179,5473}/tcp --permanent
       firewall-cmd --add-port={4789,8285,8472}/udp --permanent
       firewall-cmd --reload
@@ -24,7 +26,7 @@
     shell: kubectl apply -f https://docs.projectcalico.org/manifests/tigera-operator.yaml 
     args:
       chdir: $HOME
-      
+
   - name: Get the token for joining the worker nodes
       become: yes
       shell: kubeadm token create  --print-join-command
