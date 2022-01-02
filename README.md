@@ -50,8 +50,6 @@ ansible.cfg - Ansible configuration file created locally.
 
 hosts - Ansible Inventory File
 
-env_variables - Main environment variable file where we have to specify based on our environment.
-
 settingup_kubernetes_cluster.yml - Ansible Playbook to perform prerequisites ready, setting up nodes, configure master node.
 
 configure_worker_nodes.yml - Ansible Playbook to join worker nodes with master node.
