@@ -1,4 +1,4 @@
-# k8s_cluster_with_ansible_
+# Kubernetes Cluster with Ansible
 
 This repository has set of ansible playbooks created to setup a kubernetes cluster fully automated with one master and multiple worker nodes. This will work on physical servers, virtual machines, aws cloud, google cloud or any other cloud servers. This has been tested and verified on Centos 7.3 64 bit operating systems. 
 
@@ -20,17 +20,17 @@ once it is cloned, get into the directory
 
 cd kubernetes-and-ansible/centos
 
-There is a file "hosts" available in "centos" directory, Just make your entries of your all kubernetes nodes.
+# There is a file "hosts" available in "centos" directory, Just make your entries of your all kubernetes nodes.
 
-Deploy the ssh key from master node to other nodes for password less authentication.
+# Deploy the ssh key from master node to other nodes for password less authentication.
 
 ssh-keygen
 
-Copy the public key to all nodes including your master node and make sure you are able to login into any nodes without password.
+# Copy the public key to all nodes including your master node and make sure you are able to login into any nodes without password.
 
 ssh-copy-id user@node
 
-Update playbook/configure_master_node.yml file with master node ip address
+# Update playbook/configure_master_node.yml file with master node ip address
 
 Run "settingup_kubernetes_cluster.yml" playbook to setup all nodes and kubernetes master configuration.
 
@@ -40,9 +40,9 @@ Run "join_kubernetes_workers_nodes.yml" playbook to join the worker nodes with k
 
 ansible-playbook join_kubernetes_workers_nodes.yml
 
-Verify the configuration from master node.
+# Verify the configuration from master node.
 
-kubectl get nodes
+# kubectl get nodes
 
 What are the files this repository has?:
 
