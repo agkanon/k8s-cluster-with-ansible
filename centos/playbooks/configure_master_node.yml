@@ -23,7 +23,7 @@
         chown $(id -u):$(id -g) $HOME/.kube/config
 
   - name: Install POD Network (CALICO) 
-    shell: kubectl apply -f https://docs.projectcalico.org/manifests/tigera-operator.yaml 
+    shell: kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml 
     args:
       chdir: $HOME
 
