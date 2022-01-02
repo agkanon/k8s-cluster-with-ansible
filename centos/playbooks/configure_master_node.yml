@@ -1,5 +1,7 @@
 ---
 - hosts: kubernetes-master-nodes
+  vars_files:
+  - env_variables 
   tasks:
   - name: Configure Firewalld Service Port for Master Node
     shell: |
@@ -11,7 +13,7 @@
     shell: kubeadm config images pull
 
   - name: Initializing Kubernetes cluster
-    shell: kubeadm init --apiserver-advertise-address=192.168.30.241 --pod-network-cidr=192.168.0.0/16
+    shell: kubeadm init --apiserver-advertise-address={{ad_addr}} --pod-network-cidr={{cidr_v}}
     args:
       chdir: $HOME
       creates: cluster_initialized.txt
