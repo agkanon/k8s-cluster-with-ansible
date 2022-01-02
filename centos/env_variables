@@ -1,3 +1,0 @@
-## Update Master IP in ad_addr
-ad_addr: 192.168.30.241
-cidr_v: 192.168.0.0/16
