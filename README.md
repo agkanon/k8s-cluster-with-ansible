@@ -55,3 +55,4 @@ configure_worker_nodes.yml - Ansible Playbook to join worker nodes with master n
 clear_k8s_setup.yml - Ansible Playbook helps to delete entire configurations from all nodes.
 
 playbooks - Its a directory holds all playbooks.
+
