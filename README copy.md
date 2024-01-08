@@ -306,6 +306,7 @@ Change port: 8080 to port: 80
       cidr: 0.0.0.0/0
 Now, lastly notice that there is no POD selector has been used in ingress section but this app is supposed to be accessible from cyan-white-cka28-trb pod under default namespace. So let's edit it to look like as below:
 
+```
 ingress:
 - from:
   - namespaceSelector:
@@ -314,6 +315,7 @@ ingress:
    podSelector:
       matchLabels:
         app: cyan-white-cka28-trb 
+```
 Now, let's try to access the app from cyan-white-pod-cka28-trb
 
 kubectl exec -it cyan-white-cka28-trb -- sh
