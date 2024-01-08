@@ -697,7 +697,7 @@ spec:
     envFrom:
     - secretRef:
         name: db-secret-wl05 
-    ```
+```
 then use the kubectl replace command: -
 
 kubectl replace -f <FILE-NAME> --force
