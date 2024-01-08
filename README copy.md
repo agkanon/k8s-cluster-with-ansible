@@ -839,7 +839,8 @@ spec:
     requests:
       storage: 128Mi
 Apply the template:
-kubectl apply -f <template-file-name>.yaml ```
+kubectl apply -f <template-file-name>.yaml 
+```
 
 ***SECTION: SERVICE NETWORKING***
 
