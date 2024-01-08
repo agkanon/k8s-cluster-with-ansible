@@ -119,7 +119,7 @@ A pod called logger-cka03-arch has been created in the default namespace. Inspec
 Run the command kubectl logs logger-cka03-arch --context cluster3 > /root/logger-cka03-arch-all on the student-node.
 
 Run the command :
-
+```
 student-node ~ ➜ kubectl logs logger-cka03-arch --context cluster3 > /root/logger-cka03-arch-all
 
 student-node ~ ➜  head /root/logger-cka03-arch-all
@@ -135,7 +135,7 @@ INFO: Wed Oct 19 10:38:57 UTC 2022 Logger is running
 ERROR: Wed Oct 19 10:38:57 UTC 2022 Logger encountered errors!
 
 student-node ~ ➜  
-
+```
 ***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
 
 For this question, please set the context to cluster1 by running:
