@@ -477,16 +477,16 @@ kubectl --context cluster2 get secret cat-cka22-trb -o yaml
 You will find a key/value pair under data:, let's try to decode it to see its value:
 
 
-echo "<the decoded value you see for hostname" | base64 -d
+```echo "<the decoded value you see for hostname" | base64 -d```
 
 ok so the value is set to kodekloude which is incorrect as it should be set to kodekloud. So let's update the secret:
 
 
-echo "kodekloud" | base64
+```echo "kodekloud" | base64```
 
 kubectl edit secret cat-cka22-trb
 
-Change requests storage hostname: a29kZWtsb3Vkdg== to hostname: a29kZWtsb3VkCg== (values may vary)
+```Change requests storage hostname: a29kZWtsb3Vkdg== to hostname: a29kZWtsb3VkCg== (values may vary)```
 
 POD should be good now.
 
@@ -522,7 +522,7 @@ kubectl config use-context cluster1
 
 
 Use the following template to create a deployment called ocean-tv-wl09: -
-
+```
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -548,7 +548,7 @@ spec:
       containers:
       - image: kodekloud/webapp-color:v1
         name: webapp-color
-
+```
 
 Now, create the deployment by using the kubectl create -f command in the default namespace: -
 
