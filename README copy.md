@@ -296,7 +296,7 @@ kubectl edit networkpolicy cyan-np-cka28-trb -n cyan-ns-cka28-trb
 Under spec: -> egress: you will notice there is not cidr: block has been added, since there is no restrcitions on egress traffic so we 
 can update it as below. Further you will notice that the port used in the policy is 8080 but the app is running on default port which is 80 so let's update this as well (under egress and ingress):
 
-
+```
 Change port: 8080 to port: 80
 - ports:
   - port: 80
@@ -304,6 +304,7 @@ Change port: 8080 to port: 80
   to:
   - ipBlock:
       cidr: 0.0.0.0/0
+```      
 Now, lastly notice that there is no POD selector has been used in ingress section but this app is supposed to be accessible from cyan-white-cka28-trb pod under default namespace. So let's edit it to look like as below:
 
 ```
