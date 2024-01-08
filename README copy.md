@@ -21,14 +21,14 @@ student-node ~ ➜  kubectl edit clusterrole green-role-cka22-arch --context clu
 
 
 At the end add below code:
-
+```
 - apiGroups:
   - "*"
   resources:
   - namespaces
   verbs:
   - get
-
+```
 
 
 You can verify it as below:
@@ -53,7 +53,7 @@ Create the pod definition:
 student-node ~ ➜  vi looper-cka16-arch.yaml
 
 
-
+```
 ##Content should be:
 
 apiVersion: v1
@@ -65,7 +65,7 @@ spec:
   - name: busybox
     image: busybox
     command: ["/bin/sh", "-c", "while true; do echo hello; sleep 10;done"]
-
+```
 Create the pod:
 
 student-node ~ ➜  kubectl apply -f looper-cka16-arch.yaml --context cluster3
@@ -298,14 +298,15 @@ can update it as below. Further you will notice that the port used in the policy
 
 
 Change port: 8080 to port: 80
+```
 - ports:
   - port: 80
     protocol: TCP
   to:
   - ipBlock:
-      cidr: 0.0.0.0/0
+      cidr: 0.0.0.0/0 ```
 Now, lastly notice that there is no POD selector has been used in ingress section but this app is supposed to be accessible from cyan-white-cka28-trb pod under default namespace. So let's edit it to look like as below:
-
+```
 ingress:
 - from:
   - namespaceSelector:
@@ -313,7 +314,7 @@ ingress:
         kubernetes.io/metadata.name: default
    podSelector:
       matchLabels:
-        app: cyan-white-cka28-trb
+        app: cyan-white-cka28-trb ```
 Now, let's try to access the app from cyan-white-pod-cka28-trb
 
 kubectl exec -it cyan-white-cka28-trb -- sh
