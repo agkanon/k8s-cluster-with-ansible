@@ -652,7 +652,7 @@ kubectl get nodes -o wide
 Run the curl command to know the status of the application as follows: -
 
 ssh cluster3-controlplane
-
+```
 curl http://10.17.63.11:31020
 <!doctype html>
 <title>Hello from Flask</title>
@@ -663,7 +663,7 @@ curl http://10.17.63.11:31020
 
 
     <h2> Environment Variables: DB_Host=Not Set; DB_Database=Not Set; DB_User=Not Set; DB_Password=Not Set; 2003: Can&#39;t connect to MySQL server on &#39;localhost:3306&#39; (111 Connection refused) </h2>
-
+```
 
 As you can see, the status of the application pod is failed.
 
@@ -676,7 +676,7 @@ Let's create a new secret called db-secret-wl05 as follows: -
 
 kubectl create secret generic db-secret-wl05 -n canara-wl05 --from-literal=DB_Host=mysql-svc-wl05 --from-literal=DB_User=root --from-literal=DB_Password=password123
 After that, configure the newly created secret to the web application pod as follows: -
-
+```
 ---
 apiVersion: v1
 kind: Pod
@@ -691,14 +691,14 @@ spec:
     name: webapp-pod-wl05
     envFrom:
     - secretRef:
-        name: db-secret-wl05
+        name: db-secret-wl05 ```
 then use the kubectl replace command: -
 
 kubectl replace -f <FILE-NAME> --force
 
 
 In the end, make use of the curl command to check the status of the application pod. The status of the application should be success.
-
+```
 curl http://10.17.63.11:31020
 
 <!doctype html>
@@ -712,6 +712,7 @@ curl http://10.17.63.11:31020
 
     <img src="/static/img/success.jpg">
     <h3> Successfully connected to the MySQL database.</h3>
+```
 
 ***SECTION: STORAGE***
 
@@ -731,13 +732,14 @@ Create a storage class with the name banana-sc-cka08-str as per the properties g
 **ANSWER** ->
 
 Create a yaml template as below:
+```
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
   name: banana-sc-cka08-str
 provisioner: kubernetes.io/no-provisioner
 allowVolumeExpansion: true
-volumeBindingMode: WaitForFirstConsumer
+volumeBindingMode: WaitForFirstConsumer ```
 Apply the template:
 kubectl apply -f <template-file-name>.yaml
 
@@ -785,6 +787,7 @@ Finally, create a persistent volume claim called orange-pvc-cka07-str as per the
 **ANSWER** ->
 
 Create a yaml file as below:
+```
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
@@ -829,7 +832,7 @@ spec:
     requests:
       storage: 128Mi
 Apply the template:
-kubectl apply -f <template-file-name>.yaml
+kubectl apply -f <template-file-name>.yaml ```
 
 ***SECTION: SERVICE NETWORKING***
 
@@ -862,7 +865,7 @@ kubectl config use-context cluster3
 Create the ReplicaSet as per the requirements:
 
 
-
+```
 kubectl apply -f - << EOF
 ---
 apiVersion: v1
@@ -899,7 +902,7 @@ spec:
           - sleep
           - "3600"
 EOF
-
+```
 
 
 Now let's test if the nslookup command is working :
@@ -1067,7 +1070,7 @@ Now modify the service definition with selectors as required before applying to 
 
 
 
-student-node ~ ➜  cat service-3421-svcn.yaml 
+```student-node ~ ➜  cat service-3421-svcn.yaml 
 apiVersion: v1
 kind: Service
 metadata:
@@ -1089,7 +1092,7 @@ spec:
   type: ClusterIP
 status:
   loadBalancer: {}
-
+```
 
 
 Finally let's apply the service definition:
