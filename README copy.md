@@ -696,7 +696,8 @@ spec:
     name: webapp-pod-wl05
     envFrom:
     - secretRef:
-        name: db-secret-wl05 ```
+        name: db-secret-wl05 
+    ```
 then use the kubectl replace command: -
 
 kubectl replace -f <FILE-NAME> --force
@@ -744,7 +745,8 @@ metadata:
   name: banana-sc-cka08-str
 provisioner: kubernetes.io/no-provisioner
 allowVolumeExpansion: true
-volumeBindingMode: WaitForFirstConsumer ```
+volumeBindingMode: WaitForFirstConsumer 
+```
 Apply the template:
 kubectl apply -f <template-file-name>.yaml
 
