@@ -12,7 +12,7 @@ We have created a service account called green-sa-cka22-arch, a cluster role cal
 
 Update the permissions of this service account so that it can only get all the namespaces in cluster1.
 
-**ANSWER**
+**ANSWER** ->
 
 Edit the green-role-cka22-arch to update permissions:
 
@@ -46,7 +46,7 @@ kubectl config use-context cluster3
 
 Run a pod called looper-cka16-arch using the busybox image that runs the while loop while true; do echo hello; sleep 10;done. This pod should be created in the default namespace.
 
-**ANSWER**
+**ANSWER** ->
 
 Create the pod definition:
 
@@ -80,7 +80,7 @@ kubectl config use-context cluster1
 
 A pod called color-app-cka13-arch has been created in the default namespace. This pod logs can be accessed using kubectl logs -f color-app-cka13-arch command from the student-node. It is currently displaying Color is pink output. Update the pod definition file to make use of the environment variable with the value - green and recreate this pod.
 
-**ANSWER**
+**ANSWER** ->
 
 Export the current pod definition:
 
@@ -114,7 +114,7 @@ kubectl config use-context cluster3
 
 A pod called logger-cka03-arch has been created in the default namespace. Inspect this pod and save ALL INFO and ERROR's to the file /root/logger-cka03-arch-all on the student-node.
 
-**ANSWER**
+**ANSWER** ->
 
 Run the command kubectl logs logger-cka03-arch --context cluster3 > /root/logger-cka03-arch-all on the student-node.
 
@@ -144,7 +144,7 @@ kubectl config use-context cluster1
 
 Create a generic secret called db-user-pass-cka17-arch in the default namespace on cluster1 using the contents of the file /opt/db-user-pass on the student-node
 
-**ANSWER**
+**ANSWER** ->
 
 Create the required secret:
 
@@ -160,7 +160,7 @@ kubectl config use-context cluster1
 
 The blue-dp-cka09-trb deployment is having 0 out of 1 pods running. Fix the issue to make sure that pod is up and running.
 
-**ANSWER**
+**ANSWER** ->
 
 List the pods
 
@@ -224,7 +224,7 @@ Dig into the logs to identify the issue and make sure it is resolved.
 Note: You will not be able to access this app directly from the student-node but you can exec into the purple-app-cka27-trb pod to check.
 
 
-**ANSWER**
+**ANSWER** ->
 
 Check the purple-curl-cka27-trb pod logs
 
@@ -287,7 +287,7 @@ Note: You can exec into cyan-white-cka28-trb and cyan-black-cka28-trb pods and t
 
 You may update the network policy, but make sure it is not deleted from the cyan-ns-cka28-trb namespace.
 
-**ANSWER**
+**ANSWER** ->
 
 Let's look into the network policy
 
@@ -340,7 +340,7 @@ The db-deployment-cka05-trb deployment is having 0 out of 1 PODs ready.
 
 Figure out the issues and fix the same but make sure that you do not remove any DB related environment variables from the deployment/pod.
 
-**ANSwER**
+**ANSWER** ->
 
 Find out the name of the DB POD:
 
@@ -414,7 +414,7 @@ The cat-cka22-trb pod is stuck in Pending state. Look into the issue to fix the 
 
 Note: Do not make any changes to the pod (No changes to pod config but you may destory and re-create).
 
-**ANSWER**
+**ANSWER** ->
 
 Let's check the POD status
 kubectl get pod
@@ -509,7 +509,7 @@ Use the following specs for the deployment:
 
 6. Finally, perform a rollback and revert back the deployment image to the older version.
 
-**ANSWER**
+**ANSWER** ->
 
 Set the correct context: -
 
@@ -596,7 +596,7 @@ kubectl config use-context cluster1
 
 Create a deployment called app-wl01 using the nginx image and scale the application pods to 2.
 
-**ANSWER**
+**ANSWER** ->
 
 Run the command to change the context: -
 
@@ -641,7 +641,7 @@ Note: Check the web application again using the curl command, and the status of 
 
 You can SSH into the cluster3 using ssh cluster3-controlplane command.
 
-**ANSWER**
+**ANSWER** ->
 
 Set the correct context: -
 
@@ -728,7 +728,7 @@ Create a storage class with the name banana-sc-cka08-str as per the properties g
 
 - Volume expansion should be enabled.
 
-**ANSWER**
+**ANSWER** ->
 
 Create a yaml template as below:
 kind: StorageClass
@@ -782,7 +782,7 @@ Finally, create a persistent volume claim called orange-pvc-cka07-str as per the
 
 - The volume should be orange-pv-cka07-str.
 
-**ANSWER**
+**ANSWER** ->
 
 Create a yaml file as below:
 kind: StorageClass
@@ -853,7 +853,7 @@ container name: dns-image
 
 Once the checker pods are up and running, store the output of the command nslookup kubernetes.default from any one of the checker pod into the file /root/dns-output-12345-cka10-svcn on student-node.
 
-**ANSWER**
+**ANSWER** ->
 
 Change to the cluster4 context before attempting the task:
 
@@ -1020,7 +1020,7 @@ pod-3           ip-2
 pod-2           ip-3
 ...
 
-**ANSWER**
+**ANSWER** ->
 
 Switching to cluster3:
 
@@ -1138,7 +1138,7 @@ Expose the hr-web-app-cka08-svcn as service hr-web-app-service-cka08-svcn applic
 
 The web application listens on port 8080.
 
-**ANSWER**
+**ANSWER** ->
 
 Switch to cluster3 :
 
@@ -1173,7 +1173,7 @@ Create a nginx pod called nginx-resolver-cka06-svcn using image nginx, expose it
 
 Test that you are able to look up the service and pod names from within the cluster. Use the image: busybox:1.28 for dns lookup. Record results in /root/CKA/nginx.svc.cka06.svcn and /root/CKA/nginx.pod.cka06.svcn
 
-**ANSWER**
+**ANSWER** ->
 
 Switching to cluster1:
 
