@@ -679,7 +679,7 @@ NOTE: - In your lab, IP addresses could be different.
 
 Let's create a new secret called db-secret-wl05 as follows: -
 
-kubectl create secret generic db-secret-wl05 -n canara-wl05 --from-literal=DB_Host=mysql-svc-wl05 --from-literal=DB_User=root --from-literal=DB_Password=password123
+```kubectl create secret generic db-secret-wl05 -n canara-wl05 --from-literal=DB_Host=mysql-svc-wl05 --from-literal=DB_User=root --from-literal=DB_Password=password123```
 After that, configure the newly created secret to the web application pod as follows: -
 ```
 ---
