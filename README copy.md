@@ -13,6 +13,7 @@ We have created a service account called green-sa-cka22-arch, a cluster role cal
 Update the permissions of this service account so that it can only get all the namespaces in cluster1.
 
 **ANSWER**
+
 Edit the green-role-cka22-arch to update permissions:
 
 student-node ~ ➜  kubectl edit clusterrole green-role-cka22-arch --context cluster1
@@ -36,6 +37,7 @@ student-node ~ ➜  kubectl auth can-i get namespaces --as=system:serviceaccount
 yes
 
 ***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
+
 For this question, please set the context to cluster3 by running:
 
 
@@ -43,7 +45,9 @@ kubectl config use-context cluster3
 
 
 Run a pod called looper-cka16-arch using the busybox image that runs the while loop while true; do echo hello; sleep 10;done. This pod should be created in the default namespace.
+
 **ANSWER**
+
 Create the pod definition:
 
 student-node ~ ➜  vi looper-cka16-arch.yaml
@@ -62,12 +66,12 @@ spec:
     image: busybox
     command: ["/bin/sh", "-c", "while true; do echo hello; sleep 10;done"]
 
-
-
 Create the pod:
 
 student-node ~ ➜  kubectl apply -f looper-cka16-arch.yaml --context cluster3
+
 ***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
+
 For this question, please set the context to cluster1 by running:
 
 
@@ -75,7 +79,9 @@ kubectl config use-context cluster1
 
 
 A pod called color-app-cka13-arch has been created in the default namespace. This pod logs can be accessed using kubectl logs -f color-app-cka13-arch command from the student-node. It is currently displaying Color is pink output. Update the pod definition file to make use of the environment variable with the value - green and recreate this pod.
+
 **ANSWER**
+
 Export the current pod definition:
 
 student-node ~ ➜  kubectl get pod color-app-cka13-arch -o yaml > /tmp/color-app-cka13-arch.yaml
@@ -97,7 +103,9 @@ student-node ~ ➜ kubectl replace -f /tmp/color-app-cka13-arch.yaml --force
 
 pod "color-app-cka13-arch" deleted
 pod/color-app-cka13-arch replaced
+
 ***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
+
 For this question, please set the context to cluster3 by running:
 
 
@@ -105,7 +113,9 @@ kubectl config use-context cluster3
 
 
 A pod called logger-cka03-arch has been created in the default namespace. Inspect this pod and save ALL INFO and ERROR's to the file /root/logger-cka03-arch-all on the student-node.
+
 **ANSWER**
+
 Run the command kubectl logs logger-cka03-arch --context cluster3 > /root/logger-cka03-arch-all on the student-node.
 
 Run the command :
@@ -125,19 +135,23 @@ INFO: Wed Oct 19 10:38:57 UTC 2022 Logger is running
 ERROR: Wed Oct 19 10:38:57 UTC 2022 Logger encountered errors!
 
 student-node ~ ➜  
-***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
-For this question, please set the context to cluster1 by running:
 
+***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
+
+For this question, please set the context to cluster1 by running:
 
 kubectl config use-context cluster1
 
-
 Create a generic secret called db-user-pass-cka17-arch in the default namespace on cluster1 using the contents of the file /opt/db-user-pass on the student-node
+
 **ANSWER**
+
 Create the required secret:
 
 student-node ~ ➜  kubectl create secret generic db-user-pass-cka17-arch --from-file=/opt/db-user-pass
+
 ***SECTION: TROUBLESHOOTING***
+
 For this question, please set the context to cluster1 by running:
 
 
@@ -145,18 +159,26 @@ kubectl config use-context cluster1
 
 
 The blue-dp-cka09-trb deployment is having 0 out of 1 pods running. Fix the issue to make sure that pod is up and running.
+
 **ANSWER**
+
 List the pods
+
 kubectl get pod
+
 Most probably you see Init:Error or Init:CrashLoopBackOff for the corresponding pod.
 
 Look into the logs
+
 kubectl logs blue-dp-cka09-trb-xxxx -c init-container
+
 You will see an error something like
 
 sh: can't open 'echo 'Welcome!'': No such file or directory
 Edit the deployment
+
 kubectl edit deploy blue-dp-cka09-trb
+
 Under initContainers: -> - command: add -c to the next line of - sh, so final command should look like this
    initContainers:
    - command:
@@ -166,14 +188,21 @@ Under initContainers: -> - command: add -c to the next line of - sh, so final co
 If you will check pod then it must be failing again but with different error this time, let's find that out
 
 kubectl get event --field-selector involvedObject.name=blue-dp-cka09-trb-xxxxx
+
 You will see an error something like
 
 Warning   Failed      pod/blue-dp-cka09-trb-69dd844f76-rv9z8   Error: failed to create containerd task: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: error during container init: error mounting "/var/lib/kubelet/pods/98182a41-6d6d-406a-a3e2-37c33036acac/volumes/kubernetes.io~configmap/nginx-config" to rootfs at "/etc/nginx/nginx.conf": mount /var/lib/kubelet/pods/98182a41-6d6d-406a-a3e2-37c33036acac/volumes/kubernetes.io~configmap/nginx-config:/etc/nginx/nginx.conf (via /proc/self/fd/6), flags: 0x5001: not a directory: unknown
+
 Edit the deployment again
+
 kubectl edit deploy blue-dp-cka09-trb
+
 Under volumeMounts: -> - mountPath: /etc/nginx/nginx.conf -> name: nginx-config add subPath: nginx.conf and save the changes.
 Finally the pod should be in running state.
+
+
 ***SECTION: TROUBLESHOOTING***
+
 For this question, please set the context to cluster1 by running:
 
 
@@ -193,27 +222,40 @@ Dig into the logs to identify the issue and make sure it is resolved.
 
 
 Note: You will not be able to access this app directly from the student-node but you can exec into the purple-app-cka27-trb pod to check.
+
+
 **ANSWER**
+
 Check the purple-curl-cka27-trb pod logs
 
 kubectl logs purple-curl-cka27-trb
+
 You will see some logs as below
 
 Not able to connect to the nginx app on http://purple-svc-cka27-trb
+
 Now to debug let's try to access this app from within the purple-app-cka27-trb pod
 
+
 kubectl exec -it purple-app-cka27-trb -- bash
+
 curl http://purple-svc-cka27-trb
+
 exit
+
 You will notice its stuck, so app is not reachable. Let's look into the service to see its configured correctly.
+
 
 kubectl edit svc purple-svc-cka27-trb
 Under ports: -> port: and targetPort: is set to 8080 but nginx default port is 80 so change 8080 to 80 and save the changes
+
 Let's check the logs now
 
 kubectl logs purple-curl-cka27-trb
 You will see Thank you for using nginx. in the output now.
+
 ***SECTION: TROUBLESHOOTING***
+
 For this question, please set the context to cluster1 by running:
 
 
@@ -244,11 +286,16 @@ Note: You can exec into cyan-white-cka28-trb and cyan-black-cka28-trb pods and t
 
 
 You may update the network policy, but make sure it is not deleted from the cyan-ns-cka28-trb namespace.
+
 **ANSWER**
+
 Let's look into the network policy
 
 kubectl edit networkpolicy cyan-np-cka28-trb -n cyan-ns-cka28-trb
-Under spec: -> egress: you will notice there is not cidr: block has been added, since there is no restrcitions on egress traffic so we can update it as below. Further you will notice that the port used in the policy is 8080 but the app is running on default port which is 80 so let's update this as well (under egress and ingress):
+
+Under spec: -> egress: you will notice there is not cidr: block has been added, since there is no restrcitions on egress traffic so we 
+can update it as below. Further you will notice that the port used in the policy is 8080 but the app is running on default port which is 80 so let's update this as well (under egress and ingress):
+
 
 Change port: 8080 to port: 80
 - ports:
@@ -270,13 +317,18 @@ ingress:
 Now, let's try to access the app from cyan-white-pod-cka28-trb
 
 kubectl exec -it cyan-white-cka28-trb -- sh
+
 curl cyan-svc-cka28-trb.cyan-ns-cka28-trb.svc.cluster.local
+
 Also make sure its not accessible from the other pod(s)
 
 kubectl exec -it cyan-black-cka28-trb -- sh
 curl cyan-svc-cka28-trb.cyan-ns-cka28-trb.svc.cluster.local
+
 It should not work from this pod. So its looking good now.
+
 ***SECTION: TROUBLESHOOTING***
+
 For this question, please set the context to cluster1 by running:
 
 
@@ -287,20 +339,28 @@ The db-deployment-cka05-trb deployment is having 0 out of 1 PODs ready.
 
 
 Figure out the issues and fix the same but make sure that you do not remove any DB related environment variables from the deployment/pod.
+
 **ANSwER**
+
 Find out the name of the DB POD:
+
 kubectl get pod
+
 Check the DB POD logs:
+
 kubectl logs <pod-name>
 You might see something like as below which is not that helpful:
 
 Error from server (BadRequest): container "db" in pod "db-deployment-cka05-trb-7457c469b7-zbvx6" is waiting to start: CreateContainerConfigError
+
 So let's look into the kubernetes events for this pod:
 
 kubectl get event --field-selector involvedObject.name=<pod-name>
+
 You will see some errors as below:
 
 Error: couldn't find key db in Secret default/db-cka05-trb
+
 Now let's look into all secrets:
 
 kubectl get secrets db-root-pass-cka05-trb -o yaml
@@ -309,15 +369,20 @@ kubectl get secrets db-cka05-trb -o yaml
 Now let's look into the deployment.
 
 Edit the deployment
+
 kubectl edit deployment db-deployment-cka05-trb -o yaml
+
 You will notice that some of the keys are different what are reffered in the deployment.
 
 Change some env keys: db to database , db-user to username and db-password to password
+
 Change a secret reference: db-user-cka05-trb to db-user-pass-cka05-trb
+
 Finally save the changes.
 
 
 ***SECTION: TROUBLESHOOTING***
+
 For this question, please set the context to cluster4 by running:
 
 
@@ -337,6 +402,7 @@ We also noticed that kube-controller-manager-cluster4-controlplane pod is restar
 You can SSH into the cluster4 using ssh cluster4-controlplane command.
 
 ***SECTION: TROUBLESHOOTING***
+
 For this question, please set the context to cluster2 by running:
 
 
@@ -347,33 +413,43 @@ The cat-cka22-trb pod is stuck in Pending state. Look into the issue to fix the 
 
 
 Note: Do not make any changes to the pod (No changes to pod config but you may destory and re-create).
+
 **ANSWER**
+
 Let's check the POD status
 kubectl get pod
+
 You will see that cat-cka22-trb pod is stuck in Pending state. So let's try to look into the events
 
 kubectl --context cluster2 get event --field-selector involvedObject.name=cat-cka22-trb
+
 You will see some logs as below
 
 Warning   FailedScheduling   pod/cat-cka22-trb   0/3 nodes are available: 1 node(s) had untolerated taint {node-role.kubernetes.io/master: }, 2 node(s) didn't match Pod's node affinity/selector. preemption: 0/2 nodes are available: 3 Preemption is not helpful for scheduling.
 So seems like this POD is using the node affinity, let's look into the POD to understand the node affinity its using.
 
 kubectl --context cluster2 get pod cat-cka22-trb -o yaml
+
 Under affinity: you will see its looking for key: node and values: cluster2-node02 so let's verify if node01 has these labels applied.
 
 kubectl --context cluster2 get node cluster2-node01 -o yaml
+
 Look under labels: and you will not find any such label, so let's add this label to this node.
 
 kubectl label node cluster1-node01 node=cluster2-node01
+
 Check again the node details
 
 kubectl get node cluster2-node01 -o yaml
+
 The new label should be there, let's see if POD is scheduled now on this node
 
 kubectl --context cluster2 get pod
+
 Its is but it must be crashing or restarting, so let's look into the pod logs
 
 kubectl --context cluster2 logs -f cat-cka22-trb
+
 You will see logs as below:
 
 The HOST variable seems incorrect, it must be set to kodekloud
@@ -392,17 +468,25 @@ So we can see that HOST variable is defined and its value is being retrieved fro
 
 kubectl --context cluster2 get secret
 kubectl --context cluster2 get secret cat-cka22-trb -o yaml
+
 You will find a key/value pair under data:, let's try to decode it to see its value:
 
+
 echo "<the decoded value you see for hostname" | base64 -d
+
 ok so the value is set to kodekloude which is incorrect as it should be set to kodekloud. So let's update the secret:
 
+
 echo "kodekloud" | base64
+
 kubectl edit secret cat-cka22-trb
+
 Change requests storage hostname: a29kZWtsb3Vkdg== to hostname: a29kZWtsb3VkCg== (values may vary)
+
 POD should be good now.
 
 ***SECTION: SCHEDULING***
+
 For this question, please set the context to cluster1 by running:
 
 
@@ -426,6 +510,7 @@ Use the following specs for the deployment:
 6. Finally, perform a rollback and revert back the deployment image to the older version.
 
 **ANSWER**
+
 Set the correct context: -
 
 kubectl config use-context cluster1
@@ -473,6 +558,7 @@ kubectl set image deploy ocean-tv-wl09 webapp-color=kodekloud/webapp-color:v2
 And check out the rollout history of the deployment ocean-tv-wl09: -
 
 kubectl rollout history deploy ocean-tv-wl09
+
 deployment.apps/ocean-tv-wl09 
 REVISION  CHANGE-CAUSE
 1         <none>
@@ -501,6 +587,7 @@ kubectl describe deploy ocean-tv-wl09
 It should be kodekloud/webapp-color:v1 image.
 
 ***SECTION: SCHEDULING***
+
 For this question, please set the context to cluster1 by running:
 
 
@@ -508,7 +595,9 @@ kubectl config use-context cluster1
 
 
 Create a deployment called app-wl01 using the nginx image and scale the application pods to 2.
+
 **ANSWER**
+
 Run the command to change the context: -
 
 kubectl config use-context cluster1
@@ -524,11 +613,10 @@ To cross-verify the deployed resources, run the commands as follows: -
 kubectl get pods,deployments
 
 ***SECTION: SCHEDULING***
+
 For this question, please set the context to cluster3 by running:
 
-
 kubectl config use-context cluster3
-
 
 We have deployed a 2-tier web application on the cluster3 nodes in the canara-wl05 namespace. However, at the moment, the web app pod cannot establish a connection with the MySQL pod successfully.
 
@@ -536,8 +624,6 @@ We have deployed a 2-tier web application on the cluster3 nodes in the canara-wl
 You can check the status of the application from the terminal by running the curl command with the following syntax:
 
 curl http://cluster3-controlplane:NODE-PORT
-
-
 
 
 To make the application work, create a new secret called db-secret-wl05 with the following key values: -
@@ -554,7 +640,9 @@ Note: Check the web application again using the curl command, and the status of 
 
 
 You can SSH into the cluster3 using ssh cluster3-controlplane command.
+
 **ANSWER**
+
 Set the correct context: -
 
 kubectl config use-context cluster3
@@ -626,11 +714,10 @@ curl http://10.17.63.11:31020
     <h3> Successfully connected to the MySQL database.</h3>
 
 ***SECTION: STORAGE***
+
 For this question, please set the context to cluster1 by running:
 
-
 kubectl config use-context cluster1
-
 
 Create a storage class with the name banana-sc-cka08-str as per the properties given below:
 
@@ -640,7 +727,9 @@ Create a storage class with the name banana-sc-cka08-str as per the properties g
 - Volume binding mode should be WaitForFirstConsumer.
 
 - Volume expansion should be enabled.
+
 **ANSWER**
+
 Create a yaml template as below:
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
@@ -653,11 +742,10 @@ Apply the template:
 kubectl apply -f <template-file-name>.yaml
 
 ***SECTION: STORAGE***
+
 For this question, please set the context to cluster1 by running:
 
-
 kubectl config use-context cluster1
-
 
 Create a storage class called orange-stc-cka07-str as per the properties given below:
 
@@ -695,6 +783,7 @@ Finally, create a persistent volume claim called orange-pvc-cka07-str as per the
 - The volume should be orange-pv-cka07-str.
 
 **ANSWER**
+
 Create a yaml file as below:
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
@@ -743,6 +832,7 @@ Apply the template:
 kubectl apply -f <template-file-name>.yaml
 
 ***SECTION: SERVICE NETWORKING***
+
 For this question, please set the context to cluster3 by running:
 
 
@@ -764,11 +854,10 @@ container name: dns-image
 Once the checker pods are up and running, store the output of the command nslookup kubernetes.default from any one of the checker pod into the file /root/dns-output-12345-cka10-svcn on student-node.
 
 **ANSWER**
+
 Change to the cluster4 context before attempting the task:
 
 kubectl config use-context cluster3
-
-
 
 Create the ReplicaSet as per the requirements:
 
@@ -828,11 +917,7 @@ student-node ~ ➜  kubectl exec -n ns-12345-svcn -i -t $POD_NAME -- nslookup ku
 
 command terminated with exit code 1
 
-
-
 There seems to be a problem with the name resolution. Let's check if our coredns pods are up and if any service exists to reach them:
-
-
 
 student-node ~ ➜  k get pods -n kube-system | grep coredns
 coredns-6d4b75cb6d-cprjz                        1/1     Running   0             42m
@@ -856,8 +941,6 @@ Finally, we have our culprit.
 
 
 If we dig a little deeper, we will it is using wrong labels and selector:
-
-
 
 student-node ~ ➜  kubectl describe svc -n kube-system kube-dns 
 Name:              kube-dns
@@ -906,6 +989,7 @@ student-node ~ ➜  kubectl exec -n ns-12345-svcn -i -t $POD_NAME -- nslookup ku
 
 
 ***SECTION: SERVICE NETWORKING***
+
 For this question, please set the context to cluster3 by running:
 
 
@@ -937,13 +1021,10 @@ pod-2           ip-3
 ...
 
 **ANSWER**
+
 Switching to cluster3:
 
-
-
 kubectl config use-context cluster3
-
-
 
 The easiest way to route traffic to a specific pod is by the use of labels and selectors . List the pods along with their labels:
 
@@ -961,7 +1042,6 @@ pod-21   1/1     Running   0          5m20s   env=prod,mode=exam,type=external
 
 
 Looks like there are a lot of pods created to confuse us. But we are only concerned with the labels of pod-23 and pod-21.
-
 
 
 As we can see both the required pods have labels mode=exam,type=external in common. Let's confirm that using kubectl too:
@@ -1041,7 +1121,9 @@ pod-21     10.42.0.21
 # store the output to /root/pod_ips
 student-node ~ ➜  kubectl get pods -n spectra-1267 -o=custom-columns='POD_NAME:metadata.name,IP_ADDR:status.podIP' --sort-by=.status.podIP > /root/pod_ips_cka05_svcn
 
+
 ***SECTION: SERVICE NETWORKING***
+
 For this question, please set the context to cluster3 by running:
 
 
@@ -1055,7 +1137,9 @@ Create a deployment named hr-web-app-cka08-svcn using the image kodekloud/webapp
 Expose the hr-web-app-cka08-svcn as service hr-web-app-service-cka08-svcn application on port 30082 on the nodes of the cluster.
 
 The web application listens on port 8080.
+
 **ANSWER**
+
 Switch to cluster3 :
 
 
@@ -1076,7 +1160,9 @@ Now we can run the command: kubectl expose deployment hr-web-app-cka08-svcn --ty
 Now, in generated service definition file add the nodePort field with the given port number under the ports section and create a service.
 
 
+
 ***SECTION: SERVICE NETWORKING***
+
 For this question, please set the context to cluster1 by running:
 
 
@@ -1085,10 +1171,10 @@ kubectl config use-context cluster1
 
 Create a nginx pod called nginx-resolver-cka06-svcn using image nginx, expose it internally with a service called nginx-resolver-service-cka06-svcn.
 
-
-
 Test that you are able to look up the service and pod names from within the cluster. Use the image: busybox:1.28 for dns lookup. Record results in /root/CKA/nginx.svc.cka06.svcn and /root/CKA/nginx.pod.cka06.svcn
+
 **ANSWER**
+
 Switching to cluster1:
 
 
