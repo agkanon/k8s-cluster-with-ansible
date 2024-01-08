@@ -459,7 +459,8 @@ The HOST variable seems incorrect, it must be set to kodekloud
 Let's look into the POD env variables to see if there is any HOST env variable
 
 kubectl --context cluster2 get pod -o yaml
-Under env: you will see this
+
+```Under env: you will see this
 
 env:
 - name: HOST
@@ -467,7 +468,8 @@ env:
     secretKeyRef:
       key: hostname
       name: cat-cka22-trb
-So we can see that HOST variable is defined and its value is being retrieved from a secret called "cat-cka22-trb". Let's look into this secret.
+```      
+So we can see that HOST variable is defined and its value is being retrieved from a secret called "cat-cka22-trb". Let's look into this secret
 
 kubectl --context cluster2 get secret
 kubectl --context cluster2 get secret cat-cka22-trb -o yaml
