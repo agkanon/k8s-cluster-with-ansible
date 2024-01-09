@@ -1828,7 +1828,7 @@ Let's check if the webserver is working or not:
 
 student-node ~ ➜  curl student-node:9999
 ...
-<h1>Welcome to nginx!</h1>
+<.h1>Welcome to nginx!</h1>
 ...
 
 
@@ -1854,7 +1854,7 @@ student-node ~ ➜ kubectl --context cluster3 apply -f - <<EOF
 apiVersion: v1
 kind: Endpoints
 metadata:
-  # the name here should match the name of the Service
+  #the name here should match the name of the Service
   name: external-webserver-cka03-svcn
 subsets:
   - addresses:
