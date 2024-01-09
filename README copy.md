@@ -915,6 +915,92 @@ curl http://10.17.63.11:31020
     <h3> Successfully connected to the MySQL database.</h3>
 ```
 
+
+***SECTION: STORAGE***
+
+For this question, please set the context to cluster1 by running:
+
+
+kubectl config use-context cluster1
+
+
+A storage class called coconut-stc-cka01-str was created earlier.
+
+
+Use this storage class to create a persistent volume called coconut-pv-cka01-str as per below requirements:
+
+
+- Capacity should be 100Mi.
+
+- The volume type should be hostpath and the path should be /opt/coconut-stc-cka01-str.
+
+- Use coconut-stc-cka01-str storage class.
+
+- This volume must be created on cluster1-node01 (the /opt/coconut-stc-cka01-str directory already exists on this node).
+
+- It must have a label with key: storage-tier with value: gold.
+
+
+Also create a persistent volume claim with the name coconut-pvc-cka01-str as per below specs:
+
+
+- Request 50Mi of storage from coconut-pv-cka01-str PV, it must use matchLabels to use the PV.
+
+- Use coconut-stc-cka01-str storage class.
+
+- The access mode must be ReadWriteMany.
+
+**ANSWER**
+
+First set the context to cluster1
+
+kubectl config use-context cluster1
+Create a yaml template as below:
+```
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: coconut-pv-cka01-str
+  labels: 
+    storage-tier: gold
+spec:
+  capacity:
+    storage: 100Mi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: /opt/coconut-stc-cka01-str
+  storageClassName: coconut-stc-cka01-str
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - cluster1-node01
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: coconut-pvc-cka01-str
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 50Mi
+  storageClassName: coconut-stc-cka01-str
+  selector: 
+    matchLabels:
+      storage-tier: gold
+```
+3. Apply the templete.
+kubectl apply -f <templete-name>.yaml
+
+
+
 ***SECTION: STORAGE***
 
 For this question, please set the context to cluster1 by running:
@@ -1142,6 +1228,119 @@ kubectl apply -f <template-file-name>.yaml
 ```
 
 ***SECTION: SERVICE NETWORKING***
+For this question, please set the context to cluster3 by running:
+
+
+kubectl config use-context cluster3
+
+
+There is a deployment nginx-deployment-cka04-svcn in cluster3 which is exposed using service nginx-service-cka04-svcn.
+
+
+
+Create an ingress resource nginx-ingress-cka04-svcn to load balance the incoming traffic with the following specifications:
+
+
+pathType: Prefix and path: /
+
+Backend Service Name: nginx-service-cka04-svcn
+
+Backend Service Port: 80
+
+ssl-redirect is set to false
+
+**ANSWER**
+
+First change the context to "cluster3":
+
+
+
+student-node ~ ➜  kubectl config use-context cluster3
+Switched to context "cluster3".
+
+
+
+Now apply the ingress resource with the given requirements:
+
+
+
+kubectl apply -f - << EOF
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-ingress-cka04-svcn
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-service-cka04-svcn
+            port:
+              number: 80
+EOF
+
+
+
+Check if the ingress resource was successfully created:
+
+
+
+student-node ~ ➜  kubectl get ingress
+NAME                       CLASS    HOSTS   ADDRESS       PORTS   AGE
+nginx-ingress-cka04-svcn   <none>   *       172.25.0.10   80      13s
+
+
+
+As the ingress controller is exposed on cluster3-controlplane using traefik service, we need to ssh to cluster3-controlplane first to check if the ingress resource works properly:
+
+
+
+student-node ~ ➜  ssh cluster3-controlplane
+
+cluster3-controlplane:~# curl -I 172.25.0.11
+HTTP/1.1 200 OK
+...
+
+***SECTION: SERVICE NETWORKING***
+
+For this question, please set the context to cluster3 by running:
+
+
+kubectl config use-context cluster3
+
+
+Create a loadbalancer service with name wear-service-cka09-svcn to expose the deployment webapp-wear-cka09-svcn application in app-space namespace.
+
+**ANSWER**
+
+witch to cluster3 :
+
+
+
+kubectl config use-context cluster3
+
+
+
+On student node run the command:
+
+
+student-node ~ ➜  kubectl expose -n app-space deployment webapp-wear-cka09-svcn --type=LoadBalancer --name=wear-service-cka09-svcn --port=8080
+service/wear-service-cka09-svcn exposed
+
+student-node ~ ➜  k get svc -n app-space
+NAME                      TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
+wear-service-cka09-svcn   LoadBalancer   10.43.68.233   172.25.0.14   8080:32109/TCP   14s
+
+
+
+***SECTION: SERVICE NETWORKING***
+
+
 
 For this question, please set the context to cluster1 by running:
 
