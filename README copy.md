@@ -203,6 +203,42 @@ Finally the pod should be in running state.
 
 ***SECTION: TROUBLESHOOTING***
 
+For this question, please set the context to cluster2 by running:
+
+
+kubectl config use-context cluster2
+
+
+We recently deployed a DaemonSet called logs-cka26-trb under kube-system namespace in cluster2 for collecting logs from all the cluster nodes including the controlplane node. However, at this moment, the DaemonSet is not creating any pod on the controlplane node.
+
+
+Troubleshoot the issue and fix it to make sure the pods are getting created on all nodes including the controlplane node.
+
+**ANSWER**
+
+Check the status of DaemonSet
+
+kubectl --context2 cluster2 get ds logs-cka26-trb -n kube-system
+You will find that DESIRED CURRENT READY etc have value 2 which means there are two pods that have been created. You can check the same by listing the PODs
+
+kubectl --context2 cluster2 get pod  -n kube-system
+You can check on which nodes these are created on
+
+kubectl --context2 cluster2 get pod <pod-name> -n kube-system -o wide
+Under NODE you will find the node name, so we can see that its not scheduled on the controlplane node which is because it must be missing the reqiured tolerations. Let's edit the DaemonSet to fix the tolerations
+
+kubectl --context2 cluster2 edit ds logs-cka26-trb -n kube-system
+Under tolerations: add below given tolerations as well
+```
+- key: node-role.kubernetes.io/control-plane
+  operator: Exists
+  effect: NoSchedule
+```
+Wait for some time PODs should schedule on all nodes now including the controlplane node.
+
+
+***SECTION: TROUBLESHOOTING***
+
 For this question, please set the context to cluster1 by running:
 
 
