@@ -1324,3 +1324,69 @@ Get the IP of the nginx-resolver-cka06-svcn pod and replace the dots(.) with hyp
 student-node ~ ➜  kubectl get pod nginx-resolver-cka06-svcn -o wide
 student-node ~ ➜  IP=`kubectl get pod nginx-resolver-cka06-svcn -o wide --no-headers | awk '{print $6}' | tr '.' '-'`
 student-node ~ ➜  kubectl run test-nslookup --image=busybox:1.28 --rm -it --restart=Never -- nslookup $IP.default.pod > /root/CKA/nginx.pod.cka06.svcn
+
+
+***SECTION: SERVICE NETWORKING***
+
+For this question, please set the context to cluster3 by running:
+
+
+kubectl config use-context cluster3
+
+
+We have an external webserver running on student-node which is exposed at port 9999. We have created a service called external-webserver-cka03-svcn that can connect to our local webserver from within the kubernetes cluster3 but at the moment it is not working as expected.
+
+
+
+Fix the issue so that other pods within cluster3 can use external-webserver-cka03-svcn service to access the webserver.
+
+**ANSWER**
+
+Let's check if the webserver is working or not:
+
+
+student-node ~ ➜  curl student-node:9999
+...
+<h1>Welcome to nginx!</h1>
+...
+
+
+
+Now we will check if service is correctly defined:
+
+student-node ~ ➜  kubectl describe svc external-webserver-cka03-svcn 
+Name:              external-webserver-cka03-svcn
+Namespace:         default
+.
+.
+Endpoints:         <none> # there are no endpoints for the service
+...
+
+
+
+As we can see there is no endpoints specified for the service, hence we won't be able to get any output. Since we can not destroy any k8s object, let's create the endpoint manually for this service as shown below:
+
+
+student-node ~ ➜  export IP_ADDR=$(ifconfig eth0 | grep inet | awk '{print $2}')
+
+student-node ~ ➜ kubectl --context cluster3 apply -f - <<EOF
+apiVersion: v1
+kind: Endpoints
+metadata:
+  # the name here should match the name of the Service
+  name: external-webserver-cka03-svcn
+subsets:
+  - addresses:
+      - ip: $IP_ADDR
+    ports:
+      - port: 9999
+EOF
+
+
+
+Finally check if the curl test works now:
+
+student-node ~ ➜  kubectl --context cluster3 run --rm  -i test-curl-pod --image=curlimages/curl --restart=Never -- curl -m 2 external-webserver-cka03-svcn
+...
+<title>Welcome to nginx!</title>
+...
