@@ -509,7 +509,97 @@ We also noticed that kube-controller-manager-cluster4-controlplane pod is restar
 
 You can SSH into the cluster4 using ssh cluster4-controlplane command.
 
+
+---
+
 ***SECTION: TROUBLESHOOTING***
+
+For this question, please set the context to cluster4 by running:
+
+
+kubectl config use-context cluster4
+
+
+The pink-depl-cka14-trb Deployment was scaled to 2 replicas however, the current replicas is still 1.
+
+
+Troubleshoot and fix this issue. Make sure the CURRENT count is equal to the DESIRED count.
+
+
+You can SSH into the cluster4 using ssh cluster4-controlplane command.
+
+CURRENT count is equal to the DESIRED count?
+
+**ANSWER**
+ 
+ List the ReplicaSet to check the status
+kubectl get deployment
+We can see DESIRED count for pink-depl-cka14-trb is 2 but the CURRENT count is still 1
+
+As we know Kube Controller Manager is responsible for monitoring the status of replica sets/deployments and ensuring that the desired number of PODs are available so let's check if its running fine.
+
+kubectl get pod -n kube-system
+So kube-controller-manager-cluster4-controlplane is crashing, let's check the events to figure what's happening
+
+student-node ~ ✖ kubectl get event --field-selector involvedObject.name=kube-controller-manager-cluster4-controlplane -n kube-system
+LAST SEEN   TYPE      REASON         OBJECT                                              MESSAGE
+10m         Warning   NodeNotReady   pod/kube-controller-manager-cluster4-controlplane   Node is not ready
+3m25s       Normal    Killing        pod/kube-controller-manager-cluster4-controlplane   Stopping container kube-controller-manager
+2m18s       Normal    Pulled         pod/kube-controller-manager-cluster4-controlplane   Container image "k8s.gcr.io/kube-controller-manager:v1.24.0" already present on machine
+2m18s       Normal    Created        pod/kube-controller-manager-cluster4-controlplane   Created container kube-controller-manager
+2m18s       Warning   Failed         pod/kube-controller-manager-cluster4-controlplane   Error: failed to create containerd task: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: exec: "kube-controller-manage": executable file not found in $PATH: unknown
+108s        Warning   BackOff        pod/kube-controller-manager-cluster4-controlplane   Back-off restarting failed container
+
+student-node ~ ➜  
+You will see some errors as below
+
+Warning   Failed    pod/kube-controller-manager-cluster4-controlplane   Error: failed to create containerd task: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: exec: "kube-controller-manage": executable file not found in $PATH: unknown
+Seems like its trying to run kube-controller-manage command but it is supposed to run kube-controller-manager commmand. So lets look into the kube-controller-manager manifest which is present under /etc/kubernetes/manifests/kube-controller-manager.yaml on cluster4-controlplane node. So let's SSH into cluster4-controlplane
+
+ssh cluster4-controlplane
+vi /etc/kubernetes/manifests/kube-controller-manager.yaml
+Under containers: -> - command: change kube-controller-manage to kube-controller-manager and restart kube-controller-manager-cluster4-controlplane POD
+kubectl delete pod kube-controller-manager-cluster4-controlplane -n kube-system
+Check now the ReplicaSet
+kubectl get deployment
+CURRENT count should be equal to the DESIRED count now for pink-depl-cka14-trb.
+
+***SECTION: TROUBLESHOOTING***
+
+For this question, please set the context to cluster1 by running:
+
+
+kubectl config use-context cluster1
+
+
+There is a deployment called nodeapp-dp-cka08-trb created in the default namespace on cluster1. This app is using an ingress resource named nodeapp-ing-cka08-trb.
+
+
+From cluster1-controlplane host we should be able to access this app using the command: curl http://kodekloud-ingress.app. However, it is not working at the moment. Troubleshoot and fix the issue.
+
+
+
+Note: You should be able to ssh into the cluster1-controlplane using ssh cluster1-controlplane command.
+
+**ANSWER**
+
+SSh into cluster1-controlplane
+ssh cluster1-controlplane
+Try to access the app using curl http://kodekloud-ingress.app command. You will see 404 Not Found error.
+
+Look into the ingress to make sure its configued properly.
+
+kubectl get ingress
+kubectl edit ingress nodeapp-ing-cka08-trb
+Under rules: -> host: change example.com to kodekloud-ingress.app
+Under backend: -> service: -> name: Change example-service to nodeapp-svc-cka08-trb
+Change port: -> number: from 80 to 3000
+You should be able to access the app using curl http://kodekloud-ingress.app command now.
+
+
+
+***SECTION: TROUBLESHOOTING***
+
 
 For this question, please set the context to cluster2 by running:
 
