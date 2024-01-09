@@ -1,5 +1,5 @@
 # Kubernetes 
-***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
+01 ***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
 
 For this question, please set the context to cluster1 by running:
 
@@ -36,7 +36,7 @@ You can verify it as below:
 student-node ~ ➜  kubectl auth can-i get namespaces --as=system:serviceaccount:default:green-sa-cka22-arch
 yes
 
-***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
+02 ***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
 
 For this question, please set the context to cluster3 by running:
 
@@ -70,7 +70,7 @@ Create the pod:
 
 student-node ~ ➜  kubectl apply -f looper-cka16-arch.yaml --context cluster3
 
-***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
+03 ***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
 
 For this question, please set the context to cluster1 by running:
 
@@ -104,7 +104,7 @@ student-node ~ ➜ kubectl replace -f /tmp/color-app-cka13-arch.yaml --force
 pod "color-app-cka13-arch" deleted
 pod/color-app-cka13-arch replaced
 
-***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
+04 ***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
 
 For this question, please set the context to cluster3 by running:
 
@@ -136,7 +136,7 @@ ERROR: Wed Oct 19 10:38:57 UTC 2022 Logger encountered errors!
 
 student-node ~ ➜  
 ```
-***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
+05 ***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
 
 For this question, please set the context to cluster1 by running:
 
