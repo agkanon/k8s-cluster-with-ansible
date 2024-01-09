@@ -1053,6 +1053,94 @@ kubectl apply -f <template-file-name>.yaml
 
 ***SECTION: SERVICE NETWORKING***
 
+For this question, please set the context to cluster1 by running:
+
+
+kubectl config use-context cluster1
+
+
+John is setting up a two tier application stack that is supposed to be accessible using the service curlme-cka01-svcn. To test that the service is accessible, he is using a pod called curlpod-cka01-svcn. However, at the moment, he is unable to get any response from the application.
+
+
+
+Troubleshoot and fix this issue so the application stack is accessible.
+
+
+
+While you may delete and recreate the service curlme-cka01-svcn, please do not alter it in anyway.
+
+**ANSER**
+
+Test if the service curlme-cka01-svcn is accessible from pod curlpod-cka01-svcn or not.
+
+
+kubectl exec curlpod-cka01-svcn -- curl curlme-cka01-svcn
+
+.....
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:--  0:00:10 --:--:--     0
+
+
+We did not get any response. Check if the service is properly configured or not.
+
+
+kubectl describe svc curlme-cka01-svcn ''
+
+....
+Name:              curlme-cka01-svcn
+Namespace:         default
+Labels:            <none>
+Annotations:       <none>
+Selector:          run=curlme-ckaO1-svcn
+Type:              ClusterIP
+IP Family Policy:  SingleStack
+IP Families:       IPv4
+IP:                10.109.45.180
+IPs:               10.109.45.180
+Port:              <unset>  80/TCP
+TargetPort:        80/TCP
+Endpoints:         <none>
+Session Affinity:  None
+Events:            <none>
+
+
+The service has no endpoints configured. As we can delete the resource, let's delete the service and create the service again.
+
+To delete the service, use the command kubectl delete svc curlme-cka01-svcn.
+You can create the service using imperative way or declarative way.
+
+
+Using imperative command:
+kubectl expose pod curlme-cka01-svcn --port=80
+
+
+Using declarative manifest:
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: curlme-cka01-svcn
+  name: curlme-cka01-svcn
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    run: curlme-cka01-svcn
+  type: ClusterIP
+```
+
+You can test the connection from curlpod-cka-1-svcn using following.
+
+
+kubectl exec curlpod-cka01-svcn -- curl curlme-cka01-svcn
+
+***SECTION: SERVICE NETWORKING***
+
 For this question, please set the context to cluster3 by running:
 
 
