@@ -209,6 +209,75 @@ For this question, please set the context to cluster1 by running:
 kubectl config use-context cluster1
 
 
+​A pod called nginx-cka01-trb is running in the default namespace. There is a container called nginx-container running inside this pod that uses the image nginx:latest. There is another sidecar container called logs-container that runs in this pod.
+
+For some reason, this pod is continuously crashing. Identify the issue and fix it. Make sure that the pod is in a running state and you are able to access the website using the curl http://kodekloud-exam.app:30001 command on the controlplane node of cluster1.
+
+**ANSWER**
+
+Check the container logs:
+
+kubectl logs -f nginx-cka01-trb -c nginx-container
+You can see that its not able to pull the image.
+
+Edit the pod
+kubectl edit pod nginx-cka01-trb -o yaml
+    
+Change image tag from nginx:latst to nginx:latest
+Let's check now if the POD is in Running state
+
+kubectl get pod
+You will notice that its still crashing, so check the logs again:
+
+kubectl logs -f nginx-cka01-trb -c nginx-container
+From the logs you will notice that nginx-container is looking good now so it might be the sidecar container that is causing issues. Let's check its logs.
+
+kubectl logs -f nginx-cka01-trb -c logs-container
+You will see some logs as below:
+
+cat: can't open '/var/log/httpd/access.log': No such file or directory
+cat: can't open '/var/log/httpd/error.log': No such file or directory
+Now, let's look into the sidecar container
+
+kubectl get pod nginx-cka01-trb -o yaml
+Under containers: check the command: section, this is the command which is failing. If you notice its looking for the logs under /var/log/httpd/ directory but the mounted volume for logs is /var/log/nginx (under volumeMounts:). So we need to fix this path:
+
+kubectl get pod nginx-cka01-trb -o yaml > /tmp/test.yaml
+vi /tmp/test.yaml
+Under command: change /var/log/httpd/access.log and /var/log/httpd/error.log to /var/log/nginx/access.log and /var/log/nginx/error.log respectively.
+
+Delete the existing POD now:
+
+kubectl delete pod nginx-cka01-trb
+Create new one from the template
+
+kubectl apply -f /tmp/test.yaml
+Let's check now if the POD is in Running state
+
+kubectl get pod
+It should be good now. So let's try to access the app.
+
+curl http://kodekloud-exam.app:30001
+You will see error
+
+curl: (7) Failed to connect to kodekloud-exam.app port 30001: Connection refused
+So you are not able to access the website, et's look into the service configuration.
+
+Edit the service
+kubectl edit svc nginx-service-cka01-trb -o yaml 
+Change app label under selector from httpd-app-cka01-trb to nginx-app-cka01-trb
+You should be able to access the website now.
+curl http://kodekloud-exam.app:30001
+
+
+***SECTION: TROUBLESHOOTING***
+
+For this question, please set the context to cluster1 by running:
+
+
+kubectl config use-context cluster1
+
+
 The purple-app-cka27-trb pod is an nginx based app on the container port 80. This app is exposed within the cluster using a ClusterIP type service called purple-svc-cka27-trb.
 
 
