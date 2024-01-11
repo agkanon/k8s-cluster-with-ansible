@@ -150,6 +150,105 @@ Create the required secret:
 
 student-node ~ ➜  kubectl create secret generic db-user-pass-cka17-arch --from-file=/opt/db-user-pass
 
+
+***SECTION: TROUBLESHOOTING***
+
+For this question, please set the context to cluster1 by running:
+
+
+kubectl config use-context cluster1
+
+
+The green-deployment-cka15-trb deployment is having some issues since the corresponding POD is crashing and restarting multiple times continuously.
+
+
+Investigate the issue and fix it, make sure the POD is in running state and its stable (i.e NO RESTARTS!).
+
+**ANSWER**
+
+List the pods to check its status
+kubectl get pod
+its must have crashed already so lets look into the logs.
+
+kubectl logs -f green-deployment-cka15-trb-xxxx
+You will see some logs like these
+
+2022-09-18 17:13:25 98 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
+2022-09-18 17:13:25 98 [Note] InnoDB: Memory barrier is not used
+2022-09-18 17:13:25 98 [Note] InnoDB: Compressed tables use zlib 1.2.11
+2022-09-18 17:13:25 98 [Note] InnoDB: Using Linux native AIO
+2022-09-18 17:13:25 98 [Note] InnoDB: Using CPU crc32 instructions
+2022-09-18 17:13:25 98 [Note] InnoDB: Initializing buffer pool, size = 128.0M
+Killed
+This might be due to the resources issue, especially the memory, so let's try to recreate the POD to see if it helps.
+
+kubectl delete pod green-deployment-cka15-trb-xxxx
+Now watch closely the POD status
+
+kubectl get pod
+Pretty soon you will see the POD status has been changed to OOMKilled which confirms its the memory issue. So let's look into the resources that are assigned to this deployment.
+
+kubectl get deploy
+kubectl edit deploy green-deployment-cka15-trb
+Under resources: -> limits: change memory from 256Mi to 512Mi and save the changes.
+Now watch closely the POD status again
+
+kubectl get pod
+It should be stable now.
+
+
+***SECTION: TROUBLESHOOTING***
+
+For this question, please set the context to cluster4 by running:
+
+
+kubectl config use-context cluster4
+
+
+We tried to schedule grey-cka21-trb pod on cluster4 which was supposed to be deployed by the kubernetes scheduler so far but somehow its stuck in Pending state. Look into the issue and fix the same, make sure the pod is in Running state.
+
+
+You can SSH into the cluster4 using ssh cluster4-controlplane command.
+
+**ANSWER**
+
+Follow below given steps
+Let's check the POD status
+kubectl get pod --context=cluster4
+You will see that grey-cka21-trb pod is stuck in Pending state. So let's try to look into the logs and events
+
+kubectl logs grey-cka21-trb --context=cluster4
+kubectl get event --context=cluster4 --field-selector involvedObject.name=grey-cka21-trb
+You might not find any relevant info in the logs/events. Let's check the status of the kube-scheduler pod
+
+kubectl get pod --context=cluster4 -n kube-system
+You will notice that kube-scheduler-cluster4-controlplane pod us crashing, let's look into its logs
+
+kubectl logs kube-scheduler-cluster4-controlplane --context=cluster4 -n kube-system
+You will see an error as below:
+
+run.go:74] "command failed" err="failed to get delegated authentication kubeconfig: failed to get delegated authentication kubeconfig: stat /etc/kubernetes/scheduler.config: no such file or directory"
+From the logs we can see that its looking for a file called /etc/kubernetes/scheduler.config which seems incorrect, let's look into the kube-scheduler manifest on cluster4.
+
+ssh cluster4-controlplane
+First let's find out if /etc/kubernetes/scheduler.config
+
+ls /etc/kubernetes/scheduler.config
+You won't find it, instead the correct file is /etc/kubernetes/scheduler.conf so let's modify the manifest.
+
+vi /etc/kubernetes/manifests/kube-scheduler.yaml 
+Search for config in the file, you will find some typos, change every occurence of /etc/kubernetes/scheduler.config to /etc/kubernetes/scheduler.conf.
+
+Let's see if kube-scheduler-cluster4-controlplane is running now
+
+kubectl get pod -A
+It should be good now and grey-cka21-trb should be good as well.
+
+
+
+
+
+
 ***SECTION: TROUBLESHOOTING***
 
 For this question, please set the context to cluster1 by running:
