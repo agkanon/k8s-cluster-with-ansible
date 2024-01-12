@@ -13,7 +13,7 @@ We have created a service account called green-sa-cka22-arch, a cluster role cal
 
 Update the permissions of this service account so that it can only get all the namespaces in cluster1.
 
-# **ANSWER** ->
+# *ANSWER* ->
 
 Edit the green-role-cka22-arch to update permissions:
 
