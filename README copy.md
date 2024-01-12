@@ -218,7 +218,7 @@ It should be stable now.
 For this question, please set the context to cluster4 by running:
 
 
-kubectl config use-context cluster4
+```kubectl config use-context cluster4```
 
 
 We tried to schedule grey-cka21-trb pod on cluster4 which was supposed to be deployed by the kubernetes scheduler so far but somehow its stuck in Pending state. Look into the issue and fix the same, make sure the pod is in Running state.
@@ -269,7 +269,7 @@ It should be good now and grey-cka21-trb should be good as well.
 For this question, please set the context to cluster4 by running:
 
 
-kubectl config use-context cluster4
+```kubectl config use-context cluster4```
 
 
 The controlplane node called cluster4-controlplane in the cluster4 cluster is planned for a regular maintenance. In preparation for this maintenance work, we need to take backups of this cluster. However, something is broken at the moment!
@@ -377,7 +377,7 @@ Finally the pod should be in running state.
 For this question, please set the context to cluster2 by running:
 
 
-kubectl config use-context cluster2
+```kubectl config use-context cluster2```
 
 
 We recently deployed a DaemonSet called logs-cka26-trb under kube-system namespace in cluster2 for collecting logs from all the cluster nodes including the controlplane node. However, at this moment, the DaemonSet is not creating any pod on the controlplane node.
@@ -675,7 +675,7 @@ Finally save the changes.
 For this question, please set the context to cluster4 by running:
 
 
-kubectl config use-context cluster4
+```kubectl config use-context cluster4```
 
 
 On cluster4 we are having some weird issue where we are intermittently getting below error while running kubectl commands.
@@ -699,7 +699,7 @@ You can SSH into the cluster4 using ssh cluster4-controlplane command.
 For this question, please set the context to cluster4 by running:
 
 
-kubectl config use-context cluster4
+```kubectl config use-context cluster4```
 
 
 The pink-depl-cka14-trb Deployment was scaled to 2 replicas however, the current replicas is still 1.
@@ -790,7 +790,7 @@ You should be able to access the app using curl http://kodekloud-ingress.app com
 For this question, please set the context to cluster2 by running:
 
 
-kubectl config use-context cluster2
+```kubectl config use-context cluster2```
 
 
 The cat-cka22-trb pod is stuck in Pending state. Look into the issue to fix the same. Make sure that the pod is in running state and its stable (i.e not restarting or crashing).
