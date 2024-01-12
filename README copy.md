@@ -1,6 +1,6 @@
 # Kubernetes 
 # 01.01.01 
-***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
+## ***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
 
 For this question, please set the context to cluster1 by running:
 
@@ -156,7 +156,8 @@ Create the required secret:
 student-node ~ ➜  kubectl create secret generic db-user-pass-cka17-arch --from-file=/opt/db-user-pass
 
 
-#02.01.06# ***SECTION: TROUBLESHOOTING***
+# 02.01.06 
+***SECTION: TROUBLESHOOTING***
 
 For this question, please set the context to cluster1 by running:
 
@@ -202,7 +203,8 @@ kubectl get pod
 It should be stable now.
 
 
-#02.02.07# ***SECTION: TROUBLESHOOTING***
+# 02.02.07
+***SECTION: TROUBLESHOOTING***
 
 For this question, please set the context to cluster4 by running:
 
@@ -251,7 +253,8 @@ It should be good now and grey-cka21-trb should be good as well.
 
 
 
-#02.03.08# ***SECTION: TROUBLESHOOTING***
+# 02.03.08 
+***SECTION: TROUBLESHOOTING***
 
 For this question, please set the context to cluster4 by running:
 
