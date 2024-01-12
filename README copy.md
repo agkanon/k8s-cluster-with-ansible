@@ -655,7 +655,7 @@ Change a secret reference: db-user-cka05-trb to db-user-pass-cka05-trb
 Finally save the changes.
 
 
-#02.10.15# ***SECTION: TROUBLESHOOTING***
+## (*02.10.15*) ***SECTION: TROUBLESHOOTING***
 
 For this question, please set the context to cluster4 by running:
 
