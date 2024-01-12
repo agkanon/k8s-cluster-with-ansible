@@ -6,7 +6,7 @@
 For this question, please set the context to cluster1 by running:
 
 
-kubectl config use-context cluster1
+```kubectl config use-context cluster1```
 
 
 We have created a service account called green-sa-cka22-arch, a cluster role called green-role-cka22-arch and a cluster role binding called green-role-binding-cka22-arch.
@@ -45,7 +45,7 @@ yes
 For this question, please set the context to cluster3 by running:
 
 
-kubectl config use-context cluster3
+```kubectl config use-context cluster3```
 
 
 Run a pod called looper-cka16-arch using the busybox image that runs the while loop while true; do echo hello; sleep 10;done. This pod should be created in the default namespace.
@@ -82,7 +82,7 @@ student-node ~ ➜  kubectl apply -f looper-cka16-arch.yaml --context cluster3
 For this question, please set the context to cluster1 by running:
 
 
-kubectl config use-context cluster1
+```kubectl config use-context cluster1```
 
 
 A pod called color-app-cka13-arch has been created in the default namespace. This pod logs can be accessed using kubectl logs -f color-app-cka13-arch command from the student-node. It is currently displaying Color is pink output. Update the pod definition file to make use of the environment variable with the value - green and recreate this pod.
@@ -119,7 +119,7 @@ pod/color-app-cka13-arch replaced
 For this question, please set the context to cluster3 by running:
 
 
-kubectl config use-context cluster3
+```kubectl config use-context cluster3```
 
 
 A pod called logger-cka03-arch has been created in the default namespace. Inspect this pod and save ALL INFO and ERROR's to the file /root/logger-cka03-arch-all on the student-node.
@@ -152,7 +152,7 @@ student-node ~ ➜
 -------------------------------------------------------------------------------------------------------
 For this question, please set the context to cluster1 by running:
 
-kubectl config use-context cluster1
+```kubectl config use-context cluster1```
 
 Create a generic secret called db-user-pass-cka17-arch in the default namespace on cluster1 using the contents of the file /opt/db-user-pass on the student-node
 
@@ -170,7 +170,7 @@ student-node ~ ➜  kubectl create secret generic db-user-pass-cka17-arch --from
 For this question, please set the context to cluster1 by running:
 
 
-kubectl config use-context cluster1
+```kubectl config use-context cluster1```
 
 
 The green-deployment-cka15-trb deployment is having some issues since the corresponding POD is crashing and restarting multiple times continuously.
@@ -324,7 +324,7 @@ It should work now.
 For this question, please set the context to cluster1 by running:
 
 
-kubectl config use-context cluster1
+```kubectl config use-context cluster1```
 
 
 The blue-dp-cka09-trb deployment is having 0 out of 1 pods running. Fix the issue to make sure that pod is up and running.
@@ -415,7 +415,7 @@ Wait for some time PODs should schedule on all nodes now including the controlpl
 For this question, please set the context to cluster1 by running:
 
 
-kubectl config use-context cluster1
+```kubectl config use-context cluster1```
 
 
 ​A pod called nginx-cka01-trb is running in the default namespace. There is a container called nginx-container running inside this pod that uses the image nginx:latest. There is another sidecar container called logs-container that runs in this pod.
@@ -486,7 +486,7 @@ curl http://kodekloud-exam.app:30001
 For this question, please set the context to cluster1 by running:
 
 
-kubectl config use-context cluster1
+```kubectl config use-context cluster1```
 
 
 The purple-app-cka27-trb pod is an nginx based app on the container port 80. This app is exposed within the cluster using a ClusterIP type service called purple-svc-cka27-trb.
@@ -541,7 +541,7 @@ You will see Thank you for using nginx. in the output now.
 For this question, please set the context to cluster1 by running:
 
 
-kubectl config use-context cluster1
+```kubectl config use-context cluster1```
 
 
 One of the nginx based pod called cyan-pod-cka28-trb is running under cyan-ns-cka28-trb namespace and it is exposed within the cluster using cyan-svc-cka28-trb service.
@@ -619,7 +619,7 @@ It should not work from this pod. So its looking good now.
 For this question, please set the context to cluster1 by running:
 
 
-kubectl config use-context cluster1
+```kubectl config use-context cluster1```
 
 
 The db-deployment-cka05-trb deployment is having 0 out of 1 PODs ready.
@@ -753,7 +753,7 @@ CURRENT count should be equal to the DESIRED count now for pink-depl-cka14-trb.
 For this question, please set the context to cluster1 by running:
 
 
-kubectl config use-context cluster1
+```kubectl config use-context cluster1```
 
 
 There is a deployment called nodeapp-dp-cka08-trb created in the default namespace on cluster1. This app is using an ingress resource named nodeapp-ing-cka08-trb.
@@ -878,7 +878,7 @@ POD should be good now.
 For this question, please set the context to cluster1 by running:
 
 
-kubectl config use-context cluster1
+```kubectl config use-context cluster1```
 
 
 Create a new deployment called ocean-tv-wl09 in the default namespace using the image kodekloud/webapp-color:v1.
@@ -902,7 +902,7 @@ Use the following specs for the deployment:
 
 Set the correct context: -
 
-kubectl config use-context cluster1
+```kubectl config use-context cluster1```
 
 
 Use the following template to create a deployment called ocean-tv-wl09: -
@@ -981,7 +981,7 @@ It should be kodekloud/webapp-color:v1 image.
 For this question, please set the context to cluster1 by running:
 
 
-kubectl config use-context cluster1
+```kubectl config use-context cluster1```
 
 
 Create a deployment called app-wl01 using the nginx image and scale the application pods to 2.
@@ -991,7 +991,7 @@ Create a deployment called app-wl01 using the nginx image and scale the applicat
 
 Run the command to change the context: -
 
-kubectl config use-context cluster1
+```kubectl config use-context cluster1```
 
 
 Run the following commands: -
@@ -1008,7 +1008,7 @@ kubectl get pods,deployments
 -------------------------------------------------------------------------------------------------------
 For this question, please set the context to cluster3 by running:
 
-kubectl config use-context cluster3
+```kubectl config use-context cluster3```
 
 We have deployed a 2-tier web application on the cluster3 nodes in the canara-wl05 namespace. However, at the moment, the web app pod cannot establish a connection with the MySQL pod successfully.
 
@@ -1038,7 +1038,7 @@ You can SSH into the cluster3 using ssh cluster3-controlplane command.
 
 Set the correct context: -
 
-kubectl config use-context cluster3
+```kubectl config use-context cluster3```
 List the nodes: -
 
 kubectl get nodes -o wide
@@ -1115,7 +1115,7 @@ curl http://10.17.63.11:31020
 For this question, please set the context to cluster1 by running:
 
 
-kubectl config use-context cluster1
+```kubectl config use-context cluster1```
 
 
 A storage class called coconut-stc-cka01-str was created earlier.
@@ -1149,7 +1149,7 @@ Also create a persistent volume claim with the name coconut-pvc-cka01-str as per
 
 First set the context to cluster1
 
-kubectl config use-context cluster1
+```kubectl config use-context cluster1```
 Create a yaml template as below:
 ```
 ---
@@ -1201,7 +1201,7 @@ kubectl apply -f <templete-name>.yaml
 -------------------------------------------------------------------------------------------------------
 For this question, please set the context to cluster1 by running:
 
-kubectl config use-context cluster1
+```kubectl config use-context cluster1```
 
 Create a storage class with the name banana-sc-cka08-str as per the properties given below:
 
@@ -1235,7 +1235,7 @@ kubectl apply -f <template-file-name>.yaml
 For this question, please set the context to cluster1 by running:
 
 
-kubectl config use-context cluster1
+```kubectl config use-context cluster1```
 
 
 We want to deploy a python based application on the cluster using a template located at /root/olive-app-cka10-str.yaml on student-node. However, before you proceed we need to make some modifications to the YAML file as per details given below:
@@ -1339,7 +1339,7 @@ kubectl apply -f olive-app-cka10-str.yaml
 -------------------------------------------------------------------------------------------------------
 For this question, please set the context to cluster1 by running:
 
-kubectl config use-context cluster1
+```kubectl config use-context cluster1```
 
 Create a storage class called orange-stc-cka07-str as per the properties given below:
 
@@ -1434,7 +1434,7 @@ kubectl apply -f <template-file-name>.yaml
 For this question, please set the context to cluster3 by running:
 
 
-kubectl config use-context cluster3
+```kubectl config use-context cluster3```
 
 
 There is a deployment nginx-deployment-cka04-svcn in cluster3 which is exposed using service nginx-service-cka04-svcn.
@@ -1459,7 +1459,7 @@ First change the context to "cluster3":
 
 
 
-student-node ~ ➜  kubectl config use-context cluster3
+student-node ~ ➜  ```kubectl config use-context cluster3```
 Switched to context "cluster3".
 
 
@@ -1521,7 +1521,7 @@ HTTP/1.1 200 OK
 For this question, please set the context to cluster3 by running:
 
 
-kubectl config use-context cluster3
+```kubectl config use-context cluster3```
 
 
 Create a ReplicaSet with name checker-cka10-svcn in ns-12345-svcn namespace with image registry.k8s.io/e2e-test-images/jessie-dnsutils:1.3.
@@ -1544,7 +1544,7 @@ Once the checker pods are up and running, store the output of the command nslook
 
 Change to the cluster4 context before attempting the task:
 
-kubectl config use-context cluster3
+```kubectl config use-context cluster3```
 
 
 
@@ -1691,7 +1691,7 @@ student-node ~ ➜  kubectl exec -n ns-12345-svcn -i -t $POD_NAME -- nslookup ku
 For this question, please set the context to cluster1 by running:
 
 
-kubectl config use-context cluster1
+```kubectl config use-context cluster1```
 
 
 Create a pod with name tester-cka02-svcn in dev-cka02-svcn namespace with image registry.k8s.io/e2e-test-images/jessie-dnsutils:1.3. Make sure to use command sleep 3600 with restart policy set to Always .
@@ -1704,7 +1704,7 @@ Once the tester-cka02-svcn pod is running, store the output of the command nsloo
 
 Change to the cluster1 context before attempting the task:
 
-kubectl config use-context cluster1
+```kubectl config use-context cluster1```
 
 
 
@@ -1781,7 +1781,7 @@ Address: 10.96.0.1
 For this question, please set the context to cluster3 by running:
 
 
-kubectl config use-context cluster3
+```kubectl config use-context cluster3```
 
 
 There is a deployment nginx-deployment-cka04-svcn in cluster3 which is exposed using service nginx-service-cka04-svcn.
@@ -1806,7 +1806,7 @@ First change the context to "cluster3":
 
 
 
-student-node ~ ➜  kubectl config use-context cluster3
+student-node ~ ➜  ```kubectl config use-context cluster3```
 Switched to context "cluster3".
 
 
@@ -1863,7 +1863,7 @@ HTTP/1.1 200 OK
 For this question, please set the context to cluster3 by running:
 
 
-kubectl config use-context cluster3
+```kubectl config use-context cluster3```
 
 
 Create a loadbalancer service with name wear-service-cka09-svcn to expose the deployment webapp-wear-cka09-svcn application in app-space namespace.
@@ -1875,7 +1875,7 @@ witch to cluster3 :
 
 
 
-kubectl config use-context cluster3
+```kubectl config use-context cluster3```
 
 
 
@@ -1897,7 +1897,7 @@ wear-service-cka09-svcn   LoadBalancer   10.43.68.233   172.25.0.14   8080:32109
 For this question, please set the context to cluster1 by running:
 
 
-kubectl config use-context cluster1
+```kubectl config use-context cluster1```
 
 
 John is setting up a two tier application stack that is supposed to be accessible using the service curlme-cka01-svcn. To test that the service is accessible, he is using a pod called curlpod-cka01-svcn. However, at the moment, he is unable to get any response from the application.
@@ -1987,7 +1987,7 @@ kubectl exec curlpod-cka01-svcn -- curl curlme-cka01-svcn
 For this question, please set the context to cluster3 by running:
 
 
-kubectl config use-context cluster3
+```kubectl config use-context cluster3```
 
 
 Create a ReplicaSet with name checker-cka10-svcn in ns-12345-svcn namespace with image registry.k8s.io/e2e-test-images/jessie-dnsutils:1.3.
@@ -2009,7 +2009,7 @@ Once the checker pods are up and running, store the output of the command nslook
 
 Change to the cluster4 context before attempting the task:
 
-kubectl config use-context cluster3
+```kubectl config use-context cluster3```
 
 Create the ReplicaSet as per the requirements:
 
@@ -2140,7 +2140,7 @@ student-node ~ ➜  kubectl exec -n ns-12345-svcn -i -t $POD_NAME -- nslookup ku
 For this question, please set the context to cluster3 by running:
 
 
-kubectl config use-context cluster3
+```kubectl config use-context cluster3```
 
 
 Part I:
@@ -2173,7 +2173,7 @@ pod-2           ip-3
 
 Switching to cluster3:
 
-kubectl config use-context cluster3
+```kubectl config use-context cluster3```
 
 The easiest way to route traffic to a specific pod is by the use of labels and selectors . List the pods along with their labels:
 
@@ -2276,7 +2276,7 @@ student-node ~ ➜  kubectl get pods -n spectra-1267 -o=custom-columns='POD_NAME
 For this question, please set the context to cluster3 by running:
 
 
-kubectl config use-context cluster3
+```kubectl config use-context cluster3```
 
 
 Create a deployment named hr-web-app-cka08-svcn using the image kodekloud/webapp-color with 2 replicas.
@@ -2294,7 +2294,7 @@ Switch to cluster3 :
 
 
 
-kubectl config use-context cluster3
+```kubectl config use-context cluster3```
 
 
 
@@ -2313,7 +2313,7 @@ Now, in generated service definition file add the nodePort field with the given 
 For this question, please set the context to cluster1 by running:
 
 
-kubectl config use-context cluster1
+```kubectl config use-context cluster1```
 
 
 Create a nginx pod called nginx-resolver-cka06-svcn using image nginx, expose it internally with a service called nginx-resolver-service-cka06-svcn.
@@ -2327,7 +2327,7 @@ Switching to cluster1:
 
 
 
-kubectl config use-context cluster1
+```kubectl config use-context cluster1```
 
 
 
@@ -2361,7 +2361,7 @@ student-node ~ ➜  kubectl run test-nslookup --image=busybox:1.28 --rm -it --re
 For this question, please set the context to cluster3 by running:
 
 
-kubectl config use-context cluster3
+```kubectl config use-context cluster3```
 
 
 We have an external webserver running on student-node which is exposed at port 9999. We have created a service called external-webserver-cka03-svcn that can connect to our local webserver from within the kubernetes cluster3 but at the moment it is not working as expected.
