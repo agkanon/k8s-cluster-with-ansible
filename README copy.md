@@ -1,5 +1,5 @@
 # Kubernetes 
-01 ***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
+#01.01.01# ***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
 
 For this question, please set the context to cluster1 by running:
 
@@ -36,7 +36,7 @@ You can verify it as below:
 student-node ~ ➜  kubectl auth can-i get namespaces --as=system:serviceaccount:default:green-sa-cka22-arch
 yes
 
-02 ***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
+#01.02.02# ***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
 
 For this question, please set the context to cluster3 by running:
 
@@ -70,7 +70,7 @@ Create the pod:
 
 student-node ~ ➜  kubectl apply -f looper-cka16-arch.yaml --context cluster3
 
-03 ***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
+#01.03.03# ***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
 
 For this question, please set the context to cluster1 by running:
 
@@ -104,7 +104,7 @@ student-node ~ ➜ kubectl replace -f /tmp/color-app-cka13-arch.yaml --force
 pod "color-app-cka13-arch" deleted
 pod/color-app-cka13-arch replaced
 
-04 ***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
+#01.04.04# ***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
 
 For this question, please set the context to cluster3 by running:
 
@@ -136,7 +136,7 @@ ERROR: Wed Oct 19 10:38:57 UTC 2022 Logger encountered errors!
 
 student-node ~ ➜  
 ```
-05 ***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
+#01.05.05# ***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
 
 For this question, please set the context to cluster1 by running:
 
@@ -151,7 +151,7 @@ Create the required secret:
 student-node ~ ➜  kubectl create secret generic db-user-pass-cka17-arch --from-file=/opt/db-user-pass
 
 
-***SECTION: TROUBLESHOOTING***
+#02.01.06# ***SECTION: TROUBLESHOOTING***
 
 For this question, please set the context to cluster1 by running:
 
@@ -197,7 +197,7 @@ kubectl get pod
 It should be stable now.
 
 
-***SECTION: TROUBLESHOOTING***
+#02.02.07# ***SECTION: TROUBLESHOOTING***
 
 For this question, please set the context to cluster4 by running:
 
@@ -246,7 +246,7 @@ It should be good now and grey-cka21-trb should be good as well.
 
 
 
-***SECTION: TROUBLESHOOTING***
+#02.03.08# ***SECTION: TROUBLESHOOTING***
 
 For this question, please set the context to cluster4 by running:
 
@@ -299,7 +299,7 @@ ETCDCTL_API=3 etcdctl --endpoints=https://[127.0.0.1]:2379 --cacert=/etc/kuberne
 It should work now.
 
 
-***SECTION: TROUBLESHOOTING***
+#02.04.09# ***SECTION: TROUBLESHOOTING***
 
 For this question, please set the context to cluster1 by running:
 
@@ -350,7 +350,7 @@ Under volumeMounts: -> - mountPath: /etc/nginx/nginx.conf -> name: nginx-config 
 Finally the pod should be in running state.
 
 
-***SECTION: TROUBLESHOOTING***
+#02.05.10# ***SECTION: TROUBLESHOOTING***
 
 For this question, please set the context to cluster2 by running:
 
@@ -386,7 +386,7 @@ Under tolerations: add below given tolerations as well
 Wait for some time PODs should schedule on all nodes now including the controlplane node.
 
 
-***SECTION: TROUBLESHOOTING***
+#02.06.11# ***SECTION: TROUBLESHOOTING***
 
 For this question, please set the context to cluster1 by running:
 
@@ -455,7 +455,7 @@ You should be able to access the website now.
 curl http://kodekloud-exam.app:30001
 
 
-***SECTION: TROUBLESHOOTING***
+#02.07.12# ***SECTION: TROUBLESHOOTING***
 
 For this question, please set the context to cluster1 by running:
 
@@ -508,7 +508,7 @@ Let's check the logs now
 kubectl logs purple-curl-cka27-trb
 You will see Thank you for using nginx. in the output now.
 
-***SECTION: TROUBLESHOOTING***
+#02.08.13# ***SECTION: TROUBLESHOOTING***
 
 For this question, please set the context to cluster1 by running:
 
@@ -584,7 +584,7 @@ curl cyan-svc-cka28-trb.cyan-ns-cka28-trb.svc.cluster.local
 
 It should not work from this pod. So its looking good now.
 
-***SECTION: TROUBLESHOOTING***
+#02.09.14# ***SECTION: TROUBLESHOOTING***
 
 For this question, please set the context to cluster1 by running:
 
@@ -638,7 +638,7 @@ Change a secret reference: db-user-cka05-trb to db-user-pass-cka05-trb
 Finally save the changes.
 
 
-***SECTION: TROUBLESHOOTING***
+#02.10.15# ***SECTION: TROUBLESHOOTING***
 
 For this question, please set the context to cluster4 by running:
 
@@ -661,7 +661,7 @@ You can SSH into the cluster4 using ssh cluster4-controlplane command.
 
 ---
 
-***SECTION: TROUBLESHOOTING***
+#02.11.16# ***SECTION: TROUBLESHOOTING***
 
 For this question, please set the context to cluster4 by running:
 
@@ -713,7 +713,7 @@ Check now the ReplicaSet
 kubectl get deployment
 CURRENT count should be equal to the DESIRED count now for pink-depl-cka14-trb.
 
-***SECTION: TROUBLESHOOTING***
+#02.12.17# ***SECTION: TROUBLESHOOTING***
 
 For this question, please set the context to cluster1 by running:
 
@@ -747,7 +747,7 @@ You should be able to access the app using curl http://kodekloud-ingress.app com
 
 
 
-***SECTION: TROUBLESHOOTING***
+#02.13.18# ***SECTION: TROUBLESHOOTING***
 
 
 For this question, please set the context to cluster2 by running:
@@ -834,7 +834,7 @@ kubectl edit secret cat-cka22-trb
 
 POD should be good now.
 
-***SECTION: SCHEDULING***
+#03.01.19# ***SECTION: SCHEDULING***
 
 For this question, please set the context to cluster1 by running:
 
@@ -935,7 +935,7 @@ kubectl describe deploy ocean-tv-wl09
 
 It should be kodekloud/webapp-color:v1 image.
 
-***SECTION: SCHEDULING***
+#03.02.20# ***SECTION: SCHEDULING***
 
 For this question, please set the context to cluster1 by running:
 
@@ -961,7 +961,7 @@ To cross-verify the deployed resources, run the commands as follows: -
 
 kubectl get pods,deployments
 
-***SECTION: SCHEDULING***
+#03.03.21# ***SECTION: SCHEDULING***
 
 For this question, please set the context to cluster3 by running:
 
@@ -1065,7 +1065,7 @@ curl http://10.17.63.11:31020
 ```
 
 
-***SECTION: STORAGE***
+#04.01.22# ***SECTION: STORAGE***
 
 For this question, please set the context to cluster1 by running:
 
@@ -1150,7 +1150,7 @@ kubectl apply -f <templete-name>.yaml
 
 
 
-***SECTION: STORAGE***
+#04.02.23# ***SECTION: STORAGE***
 
 For this question, please set the context to cluster1 by running:
 
@@ -1181,7 +1181,7 @@ Apply the template:
 kubectl apply -f <template-file-name>.yaml
 
 
-***SECTION: STORAGE***
+#04.03.24# ***SECTION: STORAGE***
 
 For this question, please set the context to cluster1 by running:
 
@@ -1284,7 +1284,7 @@ Apply the template:
 
 kubectl apply -f olive-app-cka10-str.yaml
 
-***SECTION: STORAGE***
+#04.04.25# ***SECTION: STORAGE***
 
 For this question, please set the context to cluster1 by running:
 
@@ -1376,7 +1376,7 @@ Apply the template:
 kubectl apply -f <template-file-name>.yaml 
 ```
 
-***SECTION: SERVICE NETWORKING***
+#05.01.26# ***SECTION: SERVICE NETWORKING***
 
 For this question, please set the context to cluster3 by running:
 
@@ -1461,7 +1461,7 @@ HTTP/1.1 200 OK
 
 
 
-***SECTION: SERVICE NETWORKING***
+#05.02.27# ***SECTION: SERVICE NETWORKING***
 
 For this question, please set the context to cluster3 by running:
 
@@ -1629,7 +1629,7 @@ student-node ~ ➜  kubectl exec -n ns-12345-svcn -i -t $POD_NAME -- nslookup ku
 
 
 
-***SECTION: SERVICE NETWORKING***
+#05.03.28# ***SECTION: SERVICE NETWORKING***
 
 For this question, please set the context to cluster1 by running:
 
@@ -1717,7 +1717,7 @@ Address: 10.96.0.1
 ```
 
 
-***SECTION: SERVICE NETWORKING***
+#05.04.29# ***SECTION: SERVICE NETWORKING***
 
 For this question, please set the context to cluster3 by running:
 
@@ -1797,7 +1797,7 @@ cluster3-controlplane:~# curl -I 172.25.0.11
 HTTP/1.1 200 OK
 ...
 
-***SECTION: SERVICE NETWORKING***
+#05.05.30# ***SECTION: SERVICE NETWORKING***
 
 For this question, please set the context to cluster3 by running:
 
@@ -1829,7 +1829,7 @@ wear-service-cka09-svcn   LoadBalancer   10.43.68.233   172.25.0.14   8080:32109
 
 
 
-***SECTION: SERVICE NETWORKING***
+#05.06.31# ***SECTION: SERVICE NETWORKING***
 
 For this question, please set the context to cluster1 by running:
 
@@ -1917,7 +1917,7 @@ You can test the connection from curlpod-cka-1-svcn using following.
 
 kubectl exec curlpod-cka01-svcn -- curl curlme-cka01-svcn
 
-***SECTION: SERVICE NETWORKING***
+#05.07.32# ***SECTION: SERVICE NETWORKING***
 
 For this question, please set the context to cluster3 by running:
 
@@ -2074,7 +2074,7 @@ Address: 10.96.0.1
 student-node ~ ➜  kubectl exec -n ns-12345-svcn -i -t $POD_NAME -- nslookup kubernetes.default > /root/dns-output-12345-cka10-svcn
 
 
-***SECTION: SERVICE NETWORKING***
+#05.08.33# ***SECTION: SERVICE NETWORKING***
 
 For this question, please set the context to cluster3 by running:
 
@@ -2208,7 +2208,7 @@ pod-21     10.42.0.21
 student-node ~ ➜  kubectl get pods -n spectra-1267 -o=custom-columns='POD_NAME:metadata.name,IP_ADDR:status.podIP' --sort-by=.status.podIP > /root/pod_ips_cka05_svcn
 
 
-***SECTION: SERVICE NETWORKING***
+#05.09.34# ***SECTION: SERVICE NETWORKING***
 
 For this question, please set the context to cluster3 by running:
 
@@ -2247,7 +2247,7 @@ Now, in generated service definition file add the nodePort field with the given 
 
 
 
-***SECTION: SERVICE NETWORKING***
+#05.10.35# ***SECTION: SERVICE NETWORKING***
 
 For this question, please set the context to cluster1 by running:
 
@@ -2296,7 +2296,7 @@ student-node ~ ➜  IP=`kubectl get pod nginx-resolver-cka06-svcn -o wide --no-h
 student-node ~ ➜  kubectl run test-nslookup --image=busybox:1.28 --rm -it --restart=Never -- nslookup $IP.default.pod > /root/CKA/nginx.pod.cka06.svcn
 
 
-***SECTION: SERVICE NETWORKING***
+#05.11.36# ***SECTION: SERVICE NETWORKING***
 
 For this question, please set the context to cluster3 by running:
 
