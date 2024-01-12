@@ -1879,7 +1879,8 @@ Troubleshoot and fix this issue so the application stack is accessible.
 
 While you may delete and recreate the service curlme-cka01-svcn, please do not alter it in anyway.
 
-**ANSER**
+### *ANSWER*
+-------------------------------------------------------------------------------------------------------
 
 Test if the service curlme-cka01-svcn is accessible from pod curlpod-cka01-svcn or not.
 
