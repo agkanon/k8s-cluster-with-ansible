@@ -38,7 +38,7 @@ student-node ~ ➜  kubectl auth can-i get namespaces --as=system:serviceaccount
 yes
 
 # 01.02.02 
-***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
+## ***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
 
 For this question, please set the context to cluster3 by running:
 
@@ -73,7 +73,7 @@ Create the pod:
 student-node ~ ➜  kubectl apply -f looper-cka16-arch.yaml --context cluster3
 
 # 01.03.03
-***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
+## ***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
 
 For this question, please set the context to cluster1 by running:
 
