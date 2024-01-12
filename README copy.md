@@ -15,7 +15,7 @@ We have created a service account called green-sa-cka22-arch, a cluster role cal
 
 Update the permissions of this service account so that it can only get all the namespaces in cluster1.
 
-###  <h1 align="center"> *ANSWER* </h1>
+###  <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 Edit the green-role-cka22-arch to update permissions:
@@ -51,7 +51,7 @@ For this question, please set the context to cluster3 by running:
 
 Run a pod called looper-cka16-arch using the busybox image that runs the while loop while true; do echo hello; sleep 10;done. This pod should be created in the default namespace.
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 Create the pod definition:
@@ -88,7 +88,7 @@ For this question, please set the context to cluster1 by running:
 
 A pod called color-app-cka13-arch has been created in the default namespace. This pod logs can be accessed using kubectl logs -f color-app-cka13-arch command from the student-node. It is currently displaying Color is pink output. Update the pod definition file to make use of the environment variable with the value - green and recreate this pod.
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 Export the current pod definition:
@@ -125,7 +125,7 @@ For this question, please set the context to cluster3 by running:
 
 A pod called logger-cka03-arch has been created in the default namespace. Inspect this pod and save ALL INFO and ERROR's to the file /root/logger-cka03-arch-all on the student-node.
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 Run the command kubectl logs logger-cka03-arch --context cluster3 > /root/logger-cka03-arch-all on the student-node.
@@ -157,7 +157,7 @@ For this question, please set the context to cluster1 by running:
 
 Create a generic secret called db-user-pass-cka17-arch in the default namespace on cluster1 using the contents of the file /opt/db-user-pass on the student-node
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 Create the required secret:
@@ -179,7 +179,7 @@ The green-deployment-cka15-trb deployment is having some issues since the corres
 
 Investigate the issue and fix it, make sure the POD is in running state and its stable (i.e NO RESTARTS!).
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 List the pods to check its status
@@ -229,7 +229,7 @@ We tried to schedule grey-cka21-trb pod on cluster4 which was supposed to be dep
 
 You can SSH into the cluster4 using ssh cluster4-controlplane command.
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 Follow below given steps
@@ -286,7 +286,7 @@ Troubleshoot the issues and take a snapshot of the ETCD database using the etcdc
 
 Note: Make sure etcd listens at its default port. Also you can SSH to the cluster4-controlplane host using the ssh cluster4-controlplane command from the student-node.
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 SSH into cluster4-controlplane host.
@@ -345,7 +345,7 @@ For this question, please set the context to cluster1 by running:
 
 The blue-dp-cka09-trb deployment is having 0 out of 1 pods running. Fix the issue to make sure that pod is up and running.
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 List the pods
@@ -404,7 +404,7 @@ We recently deployed a DaemonSet called logs-cka26-trb under kube-system namespa
 
 Troubleshoot the issue and fix it to make sure the pods are getting created on all nodes including the controlplane node.
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 Check the status of DaemonSet
@@ -443,7 +443,7 @@ For this question, please set the context to cluster1 by running:
 
 For some reason, this pod is continuously crashing. Identify the issue and fix it. Make sure that the pod is in a running state and you are able to access the website using the ```curl http://kodekloud-exam.app:30001``` command on the controlplane node of cluster1.
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 Check the container logs:
@@ -534,7 +534,7 @@ Dig into the logs to identify the issue and make sure it is resolved.
 Note: You will not be able to access this app directly from the student-node but you can exec into the purple-app-cka27-trb pod to check.
 
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 Check the purple-curl-cka27-trb pod logs
@@ -599,7 +599,7 @@ Note: You can exec into cyan-white-cka28-trb and cyan-black-cka28-trb pods and t
 
 You may update the network policy, but make sure it is not deleted from the cyan-ns-cka28-trb namespace.
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 Let's look into the network policy
@@ -658,7 +658,7 @@ The db-deployment-cka05-trb deployment is having 0 out of 1 PODs ready.
 
 Figure out the issues and fix the same but make sure that you do not remove any DB related environment variables from the deployment/pod.
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 Find out the name of the DB POD:
@@ -744,7 +744,7 @@ You can SSH into the cluster4 using ssh cluster4-controlplane command.
 
 CURRENT count is equal to the DESIRED count?
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
  
 List the ReplicaSet to check the status
@@ -803,7 +803,7 @@ From cluster1-controlplane host we should be able to access this app using the c
 
 Note: You should be able to ssh into the cluster1-controlplane using ssh cluster1-controlplane command.
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 ```
@@ -840,7 +840,7 @@ The cat-cka22-trb pod is stuck in Pending state. Look into the issue to fix the 
 
 Note: Do not make any changes to the pod (No changes to pod config but you may destory and re-create).
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 Let's check the POD status
@@ -941,7 +941,7 @@ Use the following specs for the deployment:
 
 6. Finally, perform a rollback and revert back the deployment image to the older version.
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 Set the correct context: -
@@ -1030,7 +1030,7 @@ For this question, please set the context to cluster1 by running:
 
 Create a deployment called app-wl01 using the nginx image and scale the application pods to 2.
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 Run the command to change the context: -
@@ -1077,7 +1077,7 @@ Note: Check the web application again using the curl command, and the status of 
 
 You can SSH into the cluster3 using ssh cluster3-controlplane command.
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 Set the correct context: -
@@ -1188,7 +1188,7 @@ Also create a persistent volume claim with the name coconut-pvc-cka01-str as per
 
 - The access mode must be ReadWriteMany.
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 First set the context to cluster1
@@ -1256,7 +1256,7 @@ Create a storage class with the name banana-sc-cka08-str as per the properties g
 
 - Volume expansion should be enabled.
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 Create a yaml template as below:
@@ -1295,7 +1295,7 @@ Share the python-data volume with this container and mount the same at path /usr
 
 Finally, create a pod using this YAML and make sure the POD is in Running state.
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 Update olive-app-cka10-str.yaml template so that it looks like as below:
@@ -1420,7 +1420,7 @@ Finally, create a persistent volume claim called orange-pvc-cka07-str as per the
 
 - The volume should be orange-pv-cka07-str.
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 Create a yaml file as below:
@@ -1496,7 +1496,7 @@ Backend Service Port: 80
 
 ssl-redirect is set to false
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 First change the context to "cluster3":
@@ -1583,7 +1583,7 @@ container name: dns-image
 Once the checker pods are up and running, store the output of the command nslookup kubernetes.default from any one of the checker pod into the file /root/dns-output-12345-cka10-svcn on student-node.
 
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 Change to the cluster4 context before attempting the task:
@@ -1743,7 +1743,7 @@ Create a pod with name tester-cka02-svcn in dev-cka02-svcn namespace with image 
 
 Once the tester-cka02-svcn pod is running, store the output of the command nslookup kubernetes.default from tester pod into the file /root/dns_output on student-node.
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 Change to the cluster1 context before attempting the task:
@@ -1843,7 +1843,7 @@ Backend Service Port: 80
 
 ssl-redirect is set to false
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 First change the context to "cluster3":
@@ -1912,7 +1912,7 @@ For this question, please set the context to cluster3 by running:
 
 Create a loadbalancer service with name wear-service-cka09-svcn to expose the deployment webapp-wear-cka09-svcn application in app-space namespace.
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 witch to cluster3 :
@@ -1954,7 +1954,7 @@ Troubleshoot and fix this issue so the application stack is accessible.
 
 While you may delete and recreate the service curlme-cka01-svcn, please do not alter it in anyway.
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 Test if the service curlme-cka01-svcn is accessible from pod curlpod-cka01-svcn or not.
@@ -2048,7 +2048,7 @@ container name: dns-image
 
 Once the checker pods are up and running, store the output of the command nslookup kubernetes.default from any one of the checker pod into the file /root/dns-output-12345-cka10-svcn on student-node.
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 Change to the cluster4 context before attempting the task:
@@ -2212,7 +2212,7 @@ pod-2           ip-3
 ...
 ```
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 Switching to cluster3:
@@ -2331,7 +2331,7 @@ Expose the hr-web-app-cka08-svcn as service hr-web-app-service-cka08-svcn applic
 
 The web application listens on port 8080.
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 Switch to cluster3 :
@@ -2364,7 +2364,7 @@ Create a nginx pod called nginx-resolver-cka06-svcn using image nginx, expose it
 
 Test that you are able to look up the service and pod names from within the cluster. Use the image: busybox:1.28 for dns lookup. Record results in /root/CKA/nginx.svc.cka06.svcn and /root/CKA/nginx.pod.cka06.svcn
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 Switching to cluster1:
@@ -2414,7 +2414,7 @@ We have an external webserver running on student-node which is exposed at port 9
 
 Fix the issue so that other pods within cluster3 can use external-webserver-cka03-svcn service to access the webserver.
 
-### <h1 align="center"> *ANSWER* </h1>
+### <h1 align="center"> *Solution* </h1>
 -------------------------------------------------------------------------------------------------------
 
 Let's check if the webserver is working or not:
