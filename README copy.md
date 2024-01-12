@@ -1377,6 +1377,94 @@ kubectl apply -f <template-file-name>.yaml
 ```
 
 ***SECTION: SERVICE NETWORKING***
+
+For this question, please set the context to cluster1 by running:
+
+
+kubectl config use-context cluster1
+
+
+Create a pod with name tester-cka02-svcn in dev-cka02-svcn namespace with image registry.k8s.io/e2e-test-images/jessie-dnsutils:1.3. Make sure to use command sleep 3600 with restart policy set to Always .
+
+
+Once the tester-cka02-svcn pod is running, store the output of the command nslookup kubernetes.default from tester pod into the file /root/dns_output on student-node.
+
+**ANSWER**
+
+Change to the cluster1 context before attempting the task:
+
+kubectl config use-context cluster1
+
+
+
+Since the "dev-cka02-svcn" namespace doesn't exist, let's create it first:
+
+
+kubectl create ns dev-cka02-svcn
+
+
+
+Create the pod as per the requirements:
+
+
+```
+kubectl apply -f - << EOF
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tester-cka02-svcn
+  namespace: dev-cka02-svcn
+spec:
+  containers:
+  - name: tester-cka02-svcn
+    image: registry.k8s.io/e2e-test-images/jessie-dnsutils:1.3
+    command:
+      - sleep
+      - "3600"
+  restartPolicy: Always
+EOF
+```
+
+
+Now let's test if the nslookup command is working :
+
+```
+student-node ~ ➜  kubectl exec -n dev-cka02-svcn -i -t tester-cka02-svcn -- nslookup kubernetes.default
+;; connection timed out; no servers could be reached
+```
+
+command terminated with exit code 1
+
+
+Looks like something is broken at the moment, if we observe the kube-system namespace, we will see no coredns pods are not running which is creating the problem, let's scale them for the nslookup command to work:
+
+```
+kubectl scale deployment -n kube-system coredns --replicas=2
+```
+
+
+Now let store the correct output into the /root/dns_output on student-node :
+
+
+kubectl exec -n dev-cka02-svcn -i -t tester-cka02-svcn -- nslookup kubernetes.default >> /root/dns_output
+
+
+
+We should have something similar to below output:
+
+
+```
+student-node ~ ➜  cat /root/dns_output
+Server:         10.96.0.10
+Address:        10.96.0.10#53
+
+Name:   kubernetes.default.svc.cluster.local
+Address: 10.96.0.1
+
+```
+
+
+***SECTION: SERVICE NETWORKING***
 For this question, please set the context to cluster3 by running:
 
 
