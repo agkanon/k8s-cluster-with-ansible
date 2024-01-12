@@ -355,14 +355,14 @@ Most probably you see Init:Error or Init:CrashLoopBackOff for the corresponding 
 
 Look into the logs
 
-kubectl logs blue-dp-cka09-trb-xxxx -c init-container
+```kubectl logs blue-dp-cka09-trb-xxxx -c init-container```
 
 You will see an error something like
 
 sh: can't open 'echo 'Welcome!'': No such file or directory
 Edit the deployment
 
-kubectl edit deploy blue-dp-cka09-trb
+```kubectl edit deploy blue-dp-cka09-trb```
 
 Under initContainers: -> - command: add -c to the next line of - sh, so final command should look like this
 ```
@@ -411,13 +411,15 @@ Check the status of DaemonSet
 ```kubectl --context2 cluster2 get ds logs-cka26-trb -n kube-system```
 You will find that DESIRED CURRENT READY etc have value 2 which means there are two pods that have been created. You can check the same by listing the PODs
 
-kubectl --context2 cluster2 get pod  -n kube-system
+```kubectl --context2 cluster2 get pod  -n kube-system```
+
 You can check on which nodes these are created on
 
-kubectl --context2 cluster2 get pod <pod-name> -n kube-system -o wide
+```kubectl --context2 cluster2 get pod <pod-name> -n kube-system -o wide```
+
 Under NODE you will find the node name, so we can see that its not scheduled on the controlplane node which is because it must be missing the reqiured tolerations. Let's edit the DaemonSet to fix the tolerations
 
-kubectl --context2 cluster2 edit ds logs-cka26-trb -n kube-system
+```kubectl --context2 cluster2 edit ds logs-cka26-trb -n kube-system```
 Under tolerations: add below given tolerations as well
 ```
 - key: node-role.kubernetes.io/control-plane
@@ -438,64 +440,73 @@ For this question, please set the context to cluster1 by running:
 
 ​A pod called nginx-cka01-trb is running in the default namespace. There is a container called nginx-container running inside this pod that uses the image nginx:latest. There is another sidecar container called logs-container that runs in this pod.
 
-For some reason, this pod is continuously crashing. Identify the issue and fix it. Make sure that the pod is in a running state and you are able to access the website using the curl http://kodekloud-exam.app:30001 command on the controlplane node of cluster1.
+For some reason, this pod is continuously crashing. Identify the issue and fix it. Make sure that the pod is in a running state and you are able to access the website using the ```curl http://kodekloud-exam.app:30001``` command on the controlplane node of cluster1.
 
 ### *ANSWER*
 -------------------------------------------------------------------------------------------------------
 
 Check the container logs:
 
-kubectl logs -f nginx-cka01-trb -c nginx-container
+```kubectl logs -f nginx-cka01-trb -c nginx-container```
+
 You can see that its not able to pull the image.
 
 Edit the pod
-kubectl edit pod nginx-cka01-trb -o yaml
+```kubectl edit pod nginx-cka01-trb -o yaml```
     
 Change image tag from nginx:latst to nginx:latest
 Let's check now if the POD is in Running state
 
-kubectl get pod
+```kubectl get pod```
+
 You will notice that its still crashing, so check the logs again:
 
-kubectl logs -f nginx-cka01-trb -c nginx-container
+```kubectl logs -f nginx-cka01-trb -c nginx-container```
+
 From the logs you will notice that nginx-container is looking good now so it might be the sidecar container that is causing issues. Let's check its logs.
 
-kubectl logs -f nginx-cka01-trb -c logs-container
-You will see some logs as below:
+```kubectl logs -f nginx-cka01-trb -c logs-container```
 
+You will see some logs as below:
+```
 cat: can't open '/var/log/httpd/access.log': No such file or directory
 cat: can't open '/var/log/httpd/error.log': No such file or directory
+```
 Now, let's look into the sidecar container
 
-kubectl get pod nginx-cka01-trb -o yaml
-Under containers: check the command: section, this is the command which is failing. If you notice its looking for the logs under /var/log/httpd/ directory but the mounted volume for logs is /var/log/nginx (under volumeMounts:). So we need to fix this path:
+```kubectl get pod nginx-cka01-trb -o yaml```
 
+Under containers: check the command: section, this is the command which is failing. If you notice its looking for the logs under /var/log/httpd/ directory but the mounted volume for logs is /var/log/nginx (under volumeMounts:). So we need to fix this path:
+```
 kubectl get pod nginx-cka01-trb -o yaml > /tmp/test.yaml
 vi /tmp/test.yaml
+```
 Under command: change /var/log/httpd/access.log and /var/log/httpd/error.log to /var/log/nginx/access.log and /var/log/nginx/error.log respectively.
 
 Delete the existing POD now:
+```kubectl delete pod nginx-cka01-trb```
 
-kubectl delete pod nginx-cka01-trb
 Create new one from the template
+```kubectl apply -f /tmp/test.yaml```
 
-kubectl apply -f /tmp/test.yaml
 Let's check now if the POD is in Running state
+```kubectl get pod```
 
-kubectl get pod
 It should be good now. So let's try to access the app.
 
-curl http://kodekloud-exam.app:30001
+```curl http://kodekloud-exam.app:30001```
 You will see error
 
-curl: (7) Failed to connect to kodekloud-exam.app port 30001: Connection refused
+```curl: (7) Failed to connect to kodekloud-exam.app port 30001: Connection refused```
+
 So you are not able to access the website, et's look into the service configuration.
 
 Edit the service
-kubectl edit svc nginx-service-cka01-trb -o yaml 
+```kubectl edit svc nginx-service-cka01-trb -o yaml ```
+
 Change app label under selector from httpd-app-cka01-trb to nginx-app-cka01-trb
 You should be able to access the website now.
-curl http://kodekloud-exam.app:30001
+```curl http://kodekloud-exam.app:30001```
 
 
 ## (*02.07.12*) ***SECTION: TROUBLESHOOTING***
@@ -527,30 +538,30 @@ Note: You will not be able to access this app directly from the student-node but
 
 Check the purple-curl-cka27-trb pod logs
 
-kubectl logs purple-curl-cka27-trb
+```kubectl logs purple-curl-cka27-trb```
 
 You will see some logs as below
 
-Not able to connect to the nginx app on http://purple-svc-cka27-trb
+Not able to connect to the nginx app on ```http://purple-svc-cka27-trb```
 
 Now to debug let's try to access this app from within the purple-app-cka27-trb pod
 
-
+```
 kubectl exec -it purple-app-cka27-trb -- bash
 
 curl http://purple-svc-cka27-trb
 
 exit
-
+```
 You will notice its stuck, so app is not reachable. Let's look into the service to see its configured correctly.
 
+```kubectl edit svc purple-svc-cka27-trb```
 
-kubectl edit svc purple-svc-cka27-trb
 Under ports: -> port: and targetPort: is set to 8080 but nginx default port is 80 so change 8080 to 80 and save the changes
 
 Let's check the logs now
+```kubectl logs purple-curl-cka27-trb```
 
-kubectl logs purple-curl-cka27-trb
 You will see Thank you for using nginx. in the output now.
 
 ## (*02.08.13*) ***SECTION: TROUBLESHOOTING***
@@ -592,7 +603,7 @@ You may update the network policy, but make sure it is not deleted from the cyan
 
 Let's look into the network policy
 
-kubectl edit networkpolicy cyan-np-cka28-trb -n cyan-ns-cka28-trb
+```kubectl edit networkpolicy cyan-np-cka28-trb -n cyan-ns-cka28-trb```
 
 Under spec: -> egress: you will notice there is not cidr: block has been added, since there is no restrcitions on egress traffic so we 
 can update it as below. Further you will notice that the port used in the policy is 8080 but the app is running on default port which is 80 so let's update this as well (under egress and ingress):
@@ -620,15 +631,16 @@ ingress:
 ```
 Now, let's try to access the app from cyan-white-pod-cka28-trb
 
+```
 kubectl exec -it cyan-white-cka28-trb -- sh
 
 curl cyan-svc-cka28-trb.cyan-ns-cka28-trb.svc.cluster.local
-
+```
 Also make sure its not accessible from the other pod(s)
-
+```
 kubectl exec -it cyan-black-cka28-trb -- sh
 curl cyan-svc-cka28-trb.cyan-ns-cka28-trb.svc.cluster.local
-
+```
 It should not work from this pod. So its looking good now.
 
 ## (*02.09.14*) ***SECTION: TROUBLESHOOTING***
@@ -650,7 +662,7 @@ Figure out the issues and fix the same but make sure that you do not remove any 
 
 Find out the name of the DB POD:
 
-kubectl get pod
+```kubectl get pod```
 
 Check the DB POD logs:
 
@@ -661,22 +673,23 @@ Error from server (BadRequest): container "db" in pod "db-deployment-cka05-trb-7
 
 So let's look into the kubernetes events for this pod:
 
-kubectl get event --field-selector involvedObject.name=<pod-name>
+```kubectl get event --field-selector involvedObject.name=<pod-name>```
 
 You will see some errors as below:
 
-Error: couldn't find key db in Secret default/db-cka05-trb
+```Error: couldn't find key db in Secret default/db-cka05-trb```
 
 Now let's look into all secrets:
-
+```
 kubectl get secrets db-root-pass-cka05-trb -o yaml
 kubectl get secrets db-user-pass-cka05-trb -o yaml
 kubectl get secrets db-cka05-trb -o yaml
+```
 Now let's look into the deployment.
 
 Edit the deployment
 
-kubectl edit deployment db-deployment-cka05-trb -o yaml
+```kubectl edit deployment db-deployment-cka05-trb -o yaml```
 
 You will notice that some of the keys are different what are reffered in the deployment.
 
@@ -733,7 +746,7 @@ CURRENT count is equal to the DESIRED count?
 ### *ANSWER*
 -------------------------------------------------------------------------------------------------------
  
- List the ReplicaSet to check the status
+List the ReplicaSet to check the status
 kubectl get deployment
 We can see DESIRED count for pink-depl-cka14-trb is 2 but the CURRENT count is still 1
 
@@ -741,7 +754,7 @@ As we know Kube Controller Manager is responsible for monitoring the status of r
 
 kubectl get pod -n kube-system
 So kube-controller-manager-cluster4-controlplane is crashing, let's check the events to figure what's happening
-
+```
 student-node ~ ✖ kubectl get event --field-selector involvedObject.name=kube-controller-manager-cluster4-controlplane -n kube-system
 LAST SEEN   TYPE      REASON         OBJECT                                              MESSAGE
 10m         Warning   NodeNotReady   pod/kube-controller-manager-cluster4-controlplane   Node is not ready
@@ -752,17 +765,23 @@ LAST SEEN   TYPE      REASON         OBJECT                                     
 108s        Warning   BackOff        pod/kube-controller-manager-cluster4-controlplane   Back-off restarting failed container
 
 student-node ~ ➜  
+```
 You will see some errors as below
-
+```
 Warning   Failed    pod/kube-controller-manager-cluster4-controlplane   Error: failed to create containerd task: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: exec: "kube-controller-manage": executable file not found in $PATH: unknown
+```
 Seems like its trying to run kube-controller-manage command but it is supposed to run kube-controller-manager commmand. So lets look into the kube-controller-manager manifest which is present under /etc/kubernetes/manifests/kube-controller-manager.yaml on cluster4-controlplane node. So let's SSH into cluster4-controlplane
 
+```
 ssh cluster4-controlplane
 vi /etc/kubernetes/manifests/kube-controller-manager.yaml
+```
 Under containers: -> - command: change kube-controller-manage to kube-controller-manager and restart kube-controller-manager-cluster4-controlplane POD
-kubectl delete pod kube-controller-manager-cluster4-controlplane -n kube-system
+```kubectl delete pod kube-controller-manager-cluster4-controlplane -n kube-system```
+
 Check now the ReplicaSet
-kubectl get deployment
+```kubectl get deployment```
+
 CURRENT count should be equal to the DESIRED count now for pink-depl-cka14-trb.
 
 ## (*02.12.17*) ***SECTION: TROUBLESHOOTING***
@@ -777,7 +796,7 @@ For this question, please set the context to cluster1 by running:
 There is a deployment called nodeapp-dp-cka08-trb created in the default namespace on cluster1. This app is using an ingress resource named nodeapp-ing-cka08-trb.
 
 
-From cluster1-controlplane host we should be able to access this app using the command: curl http://kodekloud-ingress.app. However, it is not working at the moment. Troubleshoot and fix the issue.
+From cluster1-controlplane host we should be able to access this app using the command: ```curl http://kodekloud-ingress.app```. However, it is not working at the moment. Troubleshoot and fix the issue.
 
 
 
@@ -786,18 +805,22 @@ Note: You should be able to ssh into the cluster1-controlplane using ssh cluster
 ### *ANSWER*
 -------------------------------------------------------------------------------------------------------
 
+```
 SSh into cluster1-controlplane
 ssh cluster1-controlplane
-Try to access the app using curl http://kodekloud-ingress.app command. You will see 404 Not Found error.
+```
+Try to access the app using ```curl http://kodekloud-ingress.app``` command. You will see 404 Not Found error.
 
 Look into the ingress to make sure its configued properly.
 
+```
 kubectl get ingress
 kubectl edit ingress nodeapp-ing-cka08-trb
+```
 Under rules: -> host: change example.com to kodekloud-ingress.app
 Under backend: -> service: -> name: Change example-service to nodeapp-svc-cka08-trb
 Change port: -> number: from 80 to 3000
-You should be able to access the app using curl http://kodekloud-ingress.app command now.
+You should be able to access the app using ```curl http://kodekloud-ingress.app``` command now.
 
 
 
@@ -820,30 +843,31 @@ Note: Do not make any changes to the pod (No changes to pod config but you may d
 -------------------------------------------------------------------------------------------------------
 
 Let's check the POD status
-kubectl get pod
+```kubectl get pod```
 
 You will see that cat-cka22-trb pod is stuck in Pending state. So let's try to look into the events
 
-kubectl --context cluster2 get event --field-selector involvedObject.name=cat-cka22-trb
+```kubectl --context cluster2 get event --field-selector involvedObject.name=cat-cka22-trb```
 
 You will see some logs as below
-
+```
 Warning   FailedScheduling   pod/cat-cka22-trb   0/3 nodes are available: 1 node(s) had untolerated taint {node-role.kubernetes.io/master: }, 2 node(s) didn't match Pod's node affinity/selector. preemption: 0/2 nodes are available: 3 Preemption is not helpful for scheduling.
+```
 So seems like this POD is using the node affinity, let's look into the POD to understand the node affinity its using.
 
-kubectl --context cluster2 get pod cat-cka22-trb -o yaml
+```kubectl --context cluster2 get pod cat-cka22-trb -o yaml```
 
 Under affinity: you will see its looking for key: node and values: cluster2-node02 so let's verify if node01 has these labels applied.
 
-kubectl --context cluster2 get node cluster2-node01 -o yaml
+```kubectl --context cluster2 get node cluster2-node01 -o yaml```
 
 Look under labels: and you will not find any such label, so let's add this label to this node.
 
-kubectl label node cluster1-node01 node=cluster2-node01
+```kubectl label node cluster1-node01 node=cluster2-node01```
 
 Check again the node details
 
-kubectl get node cluster2-node01 -o yaml
+```kubectl get node cluster2-node01 -o yaml```
 
 The new label should be there, let's see if POD is scheduled now on this node
 
@@ -851,7 +875,7 @@ kubectl --context cluster2 get pod
 
 Its is but it must be crashing or restarting, so let's look into the pod logs
 
-kubectl --context cluster2 logs -f cat-cka22-trb
+```kubectl --context cluster2 logs -f cat-cka22-trb```
 
 You will see logs as below:
 
@@ -860,8 +884,8 @@ Let's look into the POD env variables to see if there is any HOST env variable
 
 kubectl --context cluster2 get pod -o yaml
 
-```Under env: you will see this
-
+Under env: you will see this
+```
 env:
 - name: HOST
   valueFrom:
@@ -871,9 +895,10 @@ env:
 ```      
 So we can see that HOST variable is defined and its value is being retrieved from a secret called "cat-cka22-trb". Let's look into this secret
 
+```
 kubectl --context cluster2 get secret
 kubectl --context cluster2 get secret cat-cka22-trb -o yaml
-
+```
 You will find a key/value pair under data:, let's try to decode it to see its value:
 
 
@@ -959,18 +984,18 @@ kubectl create -f <FILE-NAME>.yaml
 
 After sometime, upgrade the deployment image to kodekloud/webapp-color:v2: -
 
-kubectl set image deploy ocean-tv-wl09 webapp-color=kodekloud/webapp-color:v2
+```kubectl set image deploy ocean-tv-wl09 webapp-color=kodekloud/webapp-color:v2```
 
 
 And check out the rollout history of the deployment ocean-tv-wl09: -
-
+```
 kubectl rollout history deploy ocean-tv-wl09
 
 deployment.apps/ocean-tv-wl09 
 REVISION  CHANGE-CAUSE
 1         <none>
 2         <none>
-
+```
 
 NOTE: - Revision count is 2. In your lab, it could be different.
 
@@ -983,12 +1008,12 @@ echo "2" > /opt/revision-count.txt
 
 In final task, rollback the deployment image to an old version: -
 
-kubectl rollout undo deployment ocean-tv-wl09
+```kubectl rollout undo deployment ocean-tv-wl09```
 
 
 Verify the image name by using the following command: -
 
-kubectl describe deploy ocean-tv-wl09
+```kubectl describe deploy ocean-tv-wl09```
 
 
 It should be kodekloud/webapp-color:v1 image.
@@ -1014,12 +1039,12 @@ Run the command to change the context: -
 
 Run the following commands: -
 
-kubectl create deployment app-wl01 --image=nginx --replicas=2
+```kubectl create deployment app-wl01 --image=nginx --replicas=2```
 
 
 To cross-verify the deployed resources, run the commands as follows: -
 
-kubectl get pods,deployments
+```kubectl get pods,deployments```
 
 ## (*03.03.21*) ***SECTION: SCHEDULING***
 
@@ -1033,15 +1058,15 @@ We have deployed a 2-tier web application on the cluster3 nodes in the canara-wl
 
 You can check the status of the application from the terminal by running the curl command with the following syntax:
 
-curl http://cluster3-controlplane:NODE-PORT
+```curl http://cluster3-controlplane:NODE-PORT```
 
 
 To make the application work, create a new secret called db-secret-wl05 with the following key values: -
-
+```
 1. DB_Host=mysql-svc-wl05
 2. DB_User=root
 3. DB_Password=password123
-
+```
 
 Next, configure the web application pod to load the new environment variables from the newly created secret.
 
@@ -1350,7 +1375,7 @@ spec:
 ```    
 Apply the template:
 
-kubectl apply -f olive-app-cka10-str.yaml
+```kubectl apply -f olive-app-cka10-str.yaml```
 
 ## (*04.04.25*) ***SECTION: STORAGE***
 
@@ -1637,11 +1662,11 @@ coredns-6d4b75cb6d-fdrhv                        1/1     Running   0             
 student-node ~ ➜  k get svc -n kube-system 
 NAME       TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)                  AGE
 kube-dns   ClusterIP   10.96.0.10   <none>        53/UDP,53/TCP,9153/TCP   62m
-
+```
 
 
 Everything looks okay here but the name resolution problem exists, let's see if the kube-dns service have any active endpoints:
-
+```
 student-node ~ ➜  kubectl get ep -n kube-system kube-dns 
 NAME       ENDPOINTS   AGE
 kube-dns   <none>      63m
