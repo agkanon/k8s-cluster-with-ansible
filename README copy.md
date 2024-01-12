@@ -139,8 +139,7 @@ ERROR: Wed Oct 19 10:38:57 UTC 2022 Logger encountered errors!
 
 student-node ~ ➜  
 ```
-# 01.05.05 
-***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
+# (*01.05.05*) ***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
 
 For this question, please set the context to cluster1 by running:
 
@@ -155,8 +154,7 @@ Create the required secret:
 student-node ~ ➜  kubectl create secret generic db-user-pass-cka17-arch --from-file=/opt/db-user-pass
 
 
-# 02.01.06 
-***SECTION: TROUBLESHOOTING***
+# (*02.01.06*) ***SECTION: TROUBLESHOOTING***
 
 For this question, please set the context to cluster1 by running:
 
@@ -169,7 +167,7 @@ The green-deployment-cka15-trb deployment is having some issues since the corres
 
 Investigate the issue and fix it, make sure the POD is in running state and its stable (i.e NO RESTARTS!).
 
-**ANSWER**
+# *ANSWER*
 
 List the pods to check its status
 kubectl get pod
@@ -202,8 +200,7 @@ kubectl get pod
 It should be stable now.
 
 
-# 02.02.07
-***SECTION: TROUBLESHOOTING***
+# (*02.02.07*) ***SECTION: TROUBLESHOOTING***
 
 For this question, please set the context to cluster4 by running:
 
@@ -216,7 +213,7 @@ We tried to schedule grey-cka21-trb pod on cluster4 which was supposed to be dep
 
 You can SSH into the cluster4 using ssh cluster4-controlplane command.
 
-**ANSWER**
+# *ANSWER*
 
 Follow below given steps
 Let's check the POD status
@@ -269,7 +266,7 @@ Troubleshoot the issues and take a snapshot of the ETCD database using the etcdc
 
 Note: Make sure etcd listens at its default port. Also you can SSH to the cluster4-controlplane host using the ssh cluster4-controlplane command from the student-node.
 
-**ANSWER**
+# *ANSWER*
 
 SSH into cluster4-controlplane host.
 ssh cluster4-controlplane
@@ -370,7 +367,7 @@ We recently deployed a DaemonSet called logs-cka26-trb under kube-system namespa
 
 Troubleshoot the issue and fix it to make sure the pods are getting created on all nodes including the controlplane node.
 
-**ANSWER**
+# *ANSWER*
 
 Check the status of DaemonSet
 
@@ -405,7 +402,7 @@ kubectl config use-context cluster1
 
 For some reason, this pod is continuously crashing. Identify the issue and fix it. Make sure that the pod is in a running state and you are able to access the website using the curl http://kodekloud-exam.app:30001 command on the controlplane node of cluster1.
 
-**ANSWER**
+# *ANSWER*
 
 Check the container logs:
 
@@ -686,7 +683,7 @@ You can SSH into the cluster4 using ssh cluster4-controlplane command.
 
 CURRENT count is equal to the DESIRED count?
 
-**ANSWER**
+# *ANSWER*
  
  List the ReplicaSet to check the status
 kubectl get deployment
@@ -737,7 +734,7 @@ From cluster1-controlplane host we should be able to access this app using the c
 
 Note: You should be able to ssh into the cluster1-controlplane using ssh cluster1-controlplane command.
 
-**ANSWER**
+# *ANSWER*
 
 SSh into cluster1-controlplane
 ssh cluster1-controlplane
@@ -1106,7 +1103,7 @@ Also create a persistent volume claim with the name coconut-pvc-cka01-str as per
 
 - The access mode must be ReadWriteMany.
 
-**ANSWER**
+# *ANSWER*
 
 First set the context to cluster1
 
@@ -1209,7 +1206,7 @@ Share the python-data volume with this container and mount the same at path /usr
 
 Finally, create a pod using this YAML and make sure the POD is in Running state.
 
-**ANSWER**
+# *ANSWER*
 
 Update olive-app-cka10-str.yaml template so that it looks like as below:
 ```
@@ -1406,7 +1403,7 @@ Backend Service Port: 80
 
 ssl-redirect is set to false
 
-**ANSWER**
+# *ANSWER*
 
 First change the context to "cluster3":
 
@@ -1491,7 +1488,7 @@ container name: dns-image
 Once the checker pods are up and running, store the output of the command nslookup kubernetes.default from any one of the checker pod into the file /root/dns-output-12345-cka10-svcn on student-node.
 
 
-**ANSWER**
+# *ANSWER*
 
 Change to the cluster4 context before attempting the task:
 
@@ -1649,7 +1646,7 @@ Create a pod with name tester-cka02-svcn in dev-cka02-svcn namespace with image 
 
 Once the tester-cka02-svcn pod is running, store the output of the command nslookup kubernetes.default from tester pod into the file /root/dns_output on student-node.
 
-**ANSWER**
+# *ANSWER*
 
 Change to the cluster1 context before attempting the task:
 
@@ -1747,7 +1744,7 @@ Backend Service Port: 80
 
 ssl-redirect is set to false
 
-**ANSWER**
+# *ANSWER*
 
 First change the context to "cluster3":
 
@@ -1814,7 +1811,7 @@ kubectl config use-context cluster3
 
 Create a loadbalancer service with name wear-service-cka09-svcn to expose the deployment webapp-wear-cka09-svcn application in app-space namespace.
 
-**ANSWER**
+# *ANSWER*
 
 witch to cluster3 :
 
@@ -2317,7 +2314,7 @@ We have an external webserver running on student-node which is exposed at port 9
 
 Fix the issue so that other pods within cluster3 can use external-webserver-cka03-svcn service to access the webserver.
 
-**ANSWER**
+# *ANSWER*
 
 Let's check if the webserver is working or not:
 
