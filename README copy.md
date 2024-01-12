@@ -1384,6 +1384,91 @@ For this question, please set the context to cluster3 by running:
 kubectl config use-context cluster3
 
 
+There is a deployment nginx-deployment-cka04-svcn in cluster3 which is exposed using service nginx-service-cka04-svcn.
+
+
+
+Create an ingress resource nginx-ingress-cka04-svcn to load balance the incoming traffic with the following specifications:
+
+
+pathType: Prefix and path: /
+
+Backend Service Name: nginx-service-cka04-svcn
+
+Backend Service Port: 80
+
+ssl-redirect is set to false
+
+**ANSWER**
+
+First change the context to "cluster3":
+
+
+
+student-node ~ ➜  kubectl config use-context cluster3
+Switched to context "cluster3".
+
+
+
+Now apply the ingress resource with the given requirements:
+
+
+```
+kubectl apply -f - << EOF
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-ingress-cka04-svcn
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-service-cka04-svcn
+            port:
+              number: 80
+EOF
+```
+
+
+Check if the ingress resource was successfully created:
+
+
+```
+student-node ~ ➜  kubectl get ingress
+NAME                       CLASS    HOSTS   ADDRESS       PORTS   AGE
+nginx-ingress-cka04-svcn   <none>   *       172.25.0.10   80      13s
+```
+
+
+As the ingress controller is exposed on cluster3-controlplane using traefik service, we need to ssh to cluster3-controlplane first to check if the ingress resource works properly:
+
+
+```
+student-node ~ ➜  ssh cluster3-controlplane
+
+cluster3-controlplane:~# curl -I 172.25.0.11
+HTTP/1.1 200 OK
+...
+```
+
+
+
+
+
+***SECTION: SERVICE NETWORKING***
+
+For this question, please set the context to cluster3 by running:
+
+
+kubectl config use-context cluster3
+
+
 Create a ReplicaSet with name checker-cka10-svcn in ns-12345-svcn namespace with image registry.k8s.io/e2e-test-images/jessie-dnsutils:1.3.
 
 
