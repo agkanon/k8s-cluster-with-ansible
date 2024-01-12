@@ -165,7 +165,7 @@ Create the required secret:
 ```student-node ~ ➜  kubectl create secret generic db-user-pass-cka17-arch --from-file=/opt/db-user-pass```
 
 
-## <h1 align="center"> (*02.01.06*) ***SECTION: TROUBLESHOOTING***
+## <h1 align="center"> (*02.01.06*) ***SECTION: TROUBLESHOOTING*** </h1>
 
 -------------------------------------------------------------------------------------------------------
 For this question, please set the context to cluster1 by running:
@@ -215,7 +215,7 @@ kubectl get pod
 It should be stable now.
 
 
-## <h1 align="center"> (*02.02.07*) ***SECTION: TROUBLESHOOTING***
+## <h1 align="center"> (*02.02.07*) ***SECTION: TROUBLESHOOTING*** </h1>
 
 -------------------------------------------------------------------------------------------------------
 For this question, please set the context to cluster4 by running:
@@ -269,7 +269,7 @@ It should be good now and grey-cka21-trb should be good as well.
 
 
 
-## <h1 align="center"> (*02.03.08*) ***SECTION: TROUBLESHOOTING***
+## <h1 align="center"> (*02.03.08*) ***SECTION: TROUBLESHOOTING*** </h1>
 
 -------------------------------------------------------------------------------------------------------
 For this question, please set the context to cluster4 by running:
@@ -334,7 +334,7 @@ You should be able to list the PODs now, let's try to take etcd backup now:
 It should work now.
 
 
-## <h1 align="center"> (*02.04.09*) ***SECTION: TROUBLESHOOTING***
+## <h1 align="center"> (*02.04.09*) ***SECTION: TROUBLESHOOTING*** </h1>
 
 -------------------------------------------------------------------------------------------------------
 For this question, please set the context to cluster1 by running:
@@ -390,7 +390,7 @@ Under volumeMounts: -> - mountPath: /etc/nginx/nginx.conf -> name: nginx-config 
 Finally the pod should be in running state.
 
 
-## <h1 align="center"> (*02.05.10*) ***SECTION: TROUBLESHOOTING***
+## <h1 align="center"> (*02.05.10*) ***SECTION: TROUBLESHOOTING*** </h1>
 
 -------------------------------------------------------------------------------------------------------
 For this question, please set the context to cluster2 by running:
@@ -430,7 +430,7 @@ Under tolerations: add below given tolerations as well
 Wait for some time PODs should schedule on all nodes now including the controlplane node.
 
 
-## <h1 align="center"> (*02.06.11*) ***SECTION: TROUBLESHOOTING***
+## <h1 align="center"> (*02.06.11*) ***SECTION: TROUBLESHOOTING*** </h1>
 
 -------------------------------------------------------------------------------------------------------
 For this question, please set the context to cluster1 by running:
@@ -510,7 +510,7 @@ You should be able to access the website now.
 ```curl http://kodekloud-exam.app:30001```
 
 
-## <h1 align="center"> (*02.07.12*) ***SECTION: TROUBLESHOOTING***
+## <h1 align="center"> (*02.07.12*) ***SECTION: TROUBLESHOOTING*** </h1>
 
 -------------------------------------------------------------------------------------------------------
 For this question, please set the context to cluster1 by running:
@@ -565,7 +565,7 @@ Let's check the logs now
 
 You will see Thank you for using nginx. in the output now.
 
-## <h1 align="center"> (*02.08.13*) ***SECTION: TROUBLESHOOTING***
+## <h1 align="center"> (*02.08.13*) ***SECTION: TROUBLESHOOTING*** </h1>
 
 -------------------------------------------------------------------------------------------------------
 For this question, please set the context to cluster1 by running:
@@ -644,7 +644,7 @@ curl cyan-svc-cka28-trb.cyan-ns-cka28-trb.svc.cluster.local
 ```
 It should not work from this pod. So its looking good now.
 
-## <h1 align="center"> (*02.09.14*) ***SECTION: TROUBLESHOOTING***
+## <h1 align="center"> (*02.09.14*) ***SECTION: TROUBLESHOOTING*** </h1>
 
 -------------------------------------------------------------------------------------------------------
 For this question, please set the context to cluster1 by running:
@@ -701,7 +701,7 @@ Change a secret reference: db-user-cka05-trb to db-user-pass-cka05-trb
 Finally save the changes.
 
 
-## <h1 align="center"> (*02.10.15*) ***SECTION: TROUBLESHOOTING***
+## <h1 align="center"> (*02.10.15*) ***SECTION: TROUBLESHOOTING*** </h1>
 
 -------------------------------------------------------------------------------------------------------
 For this question, please set the context to cluster4 by running:
@@ -725,7 +725,7 @@ You can SSH into the cluster4 using ssh cluster4-controlplane command.
 
 ---
 
-## <h1 align="center"> (*02.11.16*) ***SECTION: TROUBLESHOOTING***
+## <h1 align="center"> (*02.11.16*) ***SECTION: TROUBLESHOOTING*** </h1>
 
 -------------------------------------------------------------------------------------------------------
 For this question, please set the context to cluster4 by running:
@@ -785,7 +785,7 @@ Check now the ReplicaSet
 
 CURRENT count should be equal to the DESIRED count now for pink-depl-cka14-trb.
 
-## <h1 align="center"> (*02.12.17*) ***SECTION: TROUBLESHOOTING***
+## <h1 align="center"> (*02.12.17*) ***SECTION: TROUBLESHOOTING*** </h1>
 
 -------------------------------------------------------------------------------------------------------
 For this question, please set the context to cluster1 by running:
@@ -825,7 +825,7 @@ You should be able to access the app using ```curl http://kodekloud-ingress.app`
 
 
 
-## <h1 align="center"> (*02.13.18*) ***SECTION: TROUBLESHOOTING***
+## <h1 align="center"> (*02.13.18*) ***SECTION: TROUBLESHOOTING*** </h1>
 
 
 -------------------------------------------------------------------------------------------------------
