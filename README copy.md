@@ -1378,6 +1378,174 @@ kubectl apply -f <template-file-name>.yaml
 
 ***SECTION: SERVICE NETWORKING***
 
+For this question, please set the context to cluster3 by running:
+
+
+kubectl config use-context cluster3
+
+
+Create a ReplicaSet with name checker-cka10-svcn in ns-12345-svcn namespace with image registry.k8s.io/e2e-test-images/jessie-dnsutils:1.3.
+
+
+Make sure to specify the below specs as well:
+
+
+command sleep 3600
+replicas set to 2
+container name: dns-image
+
+
+
+Once the checker pods are up and running, store the output of the command nslookup kubernetes.default from any one of the checker pod into the file /root/dns-output-12345-cka10-svcn on student-node.
+
+
+**ANSWER**
+
+Change to the cluster4 context before attempting the task:
+
+kubectl config use-context cluster3
+
+
+
+Create the ReplicaSet as per the requirements:
+
+
+```
+kubectl apply -f - << EOF
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: ns-12345-svcn
+spec: {}
+status: {}
+
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: checker-cka10-svcn
+  namespace: ns-12345-svcn
+  labels:
+    app: dns
+    tier: testing
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      tier: testing
+  template:
+    metadata:
+      labels:
+        tier: testing
+    spec:
+      containers:
+      - name: dns-image
+        image: registry.k8s.io/e2e-test-images/jessie-dnsutils:1.3
+        command:
+          - sleep
+          - "3600"
+EOF
+```
+
+
+Now let's test if the nslookup command is working :
+
+```
+student-node ~ ➜  k get pods -n ns-12345-svcn 
+NAME                       READY   STATUS    RESTARTS   AGE
+checker-cka10-svcn-d2cd2   1/1     Running   0          12s
+checker-cka10-svcn-qj8rc   1/1     Running   0          12s
+
+student-node ~ ➜  POD_NAME=`k get pods -n ns-12345-svcn --no-headers | head -1 | awk '{print $1}'`
+
+student-node ~ ➜  kubectl exec -n ns-12345-svcn -i -t $POD_NAME -- nslookup kubernetes.default
+;; connection timed out; no servers could be reached
+
+command terminated with exit code 1
+```
+
+
+There seems to be a problem with the name resolution. Let's check if our coredns pods are up and if any service exists to reach them:
+
+
+```
+student-node ~ ➜  k get pods -n kube-system | grep coredns
+coredns-6d4b75cb6d-cprjz                        1/1     Running   0             42m
+coredns-6d4b75cb6d-fdrhv                        1/1     Running   0             42m
+
+student-node ~ ➜  k get svc -n kube-system 
+NAME       TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)                  AGE
+kube-dns   ClusterIP   10.96.0.10   <none>        53/UDP,53/TCP,9153/TCP   62m
+
+
+
+Everything looks okay here but the name resolution problem exists, let's see if the kube-dns service have any active endpoints:
+
+student-node ~ ➜  kubectl get ep -n kube-system kube-dns 
+NAME       ENDPOINTS   AGE
+kube-dns   <none>      63m
+```
+
+
+Finally, we have our culprit.
+
+
+If we dig a little deeper, we will it is using wrong labels and selector:
+
+
+```
+student-node ~ ➜  kubectl describe svc -n kube-system kube-dns 
+Name:              kube-dns
+Namespace:         kube-system
+....
+Selector:          k8s-app=core-dns
+Type:              ClusterIP
+...
+
+student-node ~ ➜  kubectl get deploy -n kube-system --show-labels | grep coredns
+coredns   2/2     2            2           66m   k8s-app=kube-dns
+```
+
+
+Let's update the kube-dns service it to point to correct set of pods:
+
+
+```
+student-node ~ ➜  kubectl patch service -n kube-system kube-dns -p '{"spec":{"selector":{"k8s-app": "kube-dns"}}}'
+service/kube-dns patched
+
+student-node ~ ➜  kubectl get ep -n kube-system kube-dns 
+NAME       ENDPOINTS                                              AGE
+kube-dns   10.50.0.2:53,10.50.192.1:53,10.50.0.2:53 + 3 more...   69m
+```
+
+
+NOTE: We can use any method to update kube-dns service. In our case, we have used kubectl patch command.
+
+
+
+
+Now let's store the correct output to /root/dns-output-12345-cka10-svcn:
+
+
+```
+student-node ~ ➜  kubectl exec -n ns-12345-svcn -i -t $POD_NAME -- nslookup kubernetes.default
+Server:         10.96.0.10
+Address:        10.96.0.10#53
+
+Name:   kubernetes.default.svc.cluster.local
+Address: 10.96.0.1
+
+
+student-node ~ ➜  kubectl exec -n ns-12345-svcn -i -t $POD_NAME -- nslookup kubernetes.default > /root/dns-output-12345-cka10-svcn
+```
+
+
+
+***SECTION: SERVICE NETWORKING***
+
 For this question, please set the context to cluster1 by running:
 
 
