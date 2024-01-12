@@ -161,7 +161,7 @@ Create a generic secret called db-user-pass-cka17-arch in the default namespace 
 
 Create the required secret:
 
-student-node ~ ➜  kubectl create secret generic db-user-pass-cka17-arch --from-file=/opt/db-user-pass
+```student-node ~ ➜  kubectl create secret generic db-user-pass-cka17-arch --from-file=/opt/db-user-pass```
 
 
 ## (*02.01.06*) ***SECTION: TROUBLESHOOTING***
