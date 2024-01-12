@@ -1718,6 +1718,7 @@ Address: 10.96.0.1
 
 
 ***SECTION: SERVICE NETWORKING***
+
 For this question, please set the context to cluster3 by running:
 
 
@@ -1829,8 +1830,6 @@ wear-service-cka09-svcn   LoadBalancer   10.43.68.233   172.25.0.14   8080:32109
 
 
 ***SECTION: SERVICE NETWORKING***
-
-
 
 For this question, please set the context to cluster1 by running:
 
