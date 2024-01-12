@@ -1924,14 +1924,14 @@ witch to cluster3 :
 
 On student node run the command:
 
-
+```
 student-node ~ ➜  kubectl expose -n app-space deployment webapp-wear-cka09-svcn --type=LoadBalancer --name=wear-service-cka09-svcn --port=8080
 service/wear-service-cka09-svcn exposed
 
 student-node ~ ➜  k get svc -n app-space
 NAME                      TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
 wear-service-cka09-svcn   LoadBalancer   10.43.68.233   172.25.0.14   8080:32109/TCP   14s
-
+```
 
 
 ## (*05.06.31*) ***SECTION: SERVICE NETWORKING***
@@ -1970,7 +1970,7 @@ kubectl exec curlpod-cka01-svcn -- curl curlme-cka01-svcn
 We did not get any response. Check if the service is properly configured or not.
 
 
-kubectl describe svc curlme-cka01-svcn ''
+```kubectl describe svc curlme-cka01-svcn``` ''
 
 ....
 Name:              curlme-cka01-svcn
@@ -2022,7 +2022,7 @@ spec:
 You can test the connection from curlpod-cka-1-svcn using following.
 
 
-kubectl exec curlpod-cka01-svcn -- curl curlme-cka01-svcn
+```kubectl exec curlpod-cka01-svcn -- curl curlme-cka01-svcn```
 
 ## (*05.07.32*) ***SECTION: SERVICE NETWORKING***
 
