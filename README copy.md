@@ -1,6 +1,6 @@
 # Kubernetes 
-# 01.01.01 
-## ***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE*** (# 01.01.01 )
+
+## ***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE*** (01.01.01)
 
 For this question, please set the context to cluster1 by running:
 
