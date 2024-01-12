@@ -293,18 +293,23 @@ SSH into cluster4-controlplane host.
 Let's take etcd backup
 
 ```ETCDCTL_API=3 etcdctl --endpoints=https://[127.0.0.1]:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key snapshot save /opt/etcd-boot-cka18-trb.db```
+
 It might stuck for forever, let's see why that would happen. Try to list the PODs first
 
 ```kubectl get pod -A```
+
 There might an error like
 
 ```The connection to the server cluster4-controlplane:6443 was refused - did you specify the right host or port?```
+
 There seems to be some issue with the cluster so let's look into the logs
 
 ```journalctl -u kubelet -f```
+
 You will see a lot of connect: connection refused erros but that must be because the different cluster components are not able to connect to the api server so try to filter out these logs to look more closly
 
 ```journalctl -u kubelet -f | grep -v 'connect: connection refused'```
+
 You should see some erros as below
 ```
 cluster4-controlplane kubelet[2240]: E0923 04:38:15.630925    2240 file.go:187] "Could not process manifest file" err="invalid pod: [spec.containers[0].volumeMounts[1].name: Not found: \"etcd-cert\"]" path="/etc/kubernetes/manifests/etcd.yaml"
@@ -312,15 +317,19 @@ cluster4-controlplane kubelet[2240]: E0923 04:38:15.630925    2240 file.go:187] 
 So seems like there is some incorrect volume which etcd is trying to mount, let's look into the etcd manifest.
 
 ```vi /etc/kubernetes/manifests/etcd.yaml```
+
 Search for etcd-cert, you will notice that the volume name is etcd-certs but the volume mount is trying to mount etcd-cert volume which is incorrect. Fix the volume mount name and save the changes. Let's restart kubelet service after that.
 
 ```systemctl restart kubelet```
+
 Wait for few minutes to see if its good now.
 
 ```kubectl get pod -A```
+
 You should be able to list the PODs now, let's try to take etcd backup now:
 
 ```ETCDCTL_API=3 etcdctl --endpoints=https://[127.0.0.1]:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key snapshot save /opt/etcd-boot-cka18-trb.db```
+
 It should work now.
 
 
