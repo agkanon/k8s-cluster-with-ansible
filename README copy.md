@@ -1,6 +1,7 @@
 # Kubernetes 
 
-##  (*01.01.01*) ***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE***
+
+## <h1 align="center"> (*01.01.01*) ***SECTION: ARCHITECTURE, INSTALL AND MAINTENANCE*** 👋</h1>
 
 -------------------------------------------------------------------------------------------------------
 For this question, please set the context to cluster1 by running:
