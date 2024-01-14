@@ -720,7 +720,7 @@ Whenever you get this error, you can wait for 10-15 seconds to make kubectl comm
 We also noticed that ```kube-controller-manager-cluster4-controlplane``` pod is restarting continuously. Look into the issue and troubleshoot the same.
 
 
-You can SSH into the cluster4 using ssh cluster4-controlplane command.
+You can SSH into the cluster4 using ```ssh cluster4-controlplane``` command.
 
 
 ### <h1 align="center"> *Solution* </h1>
