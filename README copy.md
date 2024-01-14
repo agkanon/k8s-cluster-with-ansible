@@ -387,7 +387,7 @@ Edit the deployment again
 
 ```kubectl edit deploy blue-dp-cka09-trb```
 
-Under volumeMounts: -> - mountPath: /etc/nginx/nginx.conf -> name: nginx-config add subPath: nginx.conf and save the changes.
+Under volumeMounts: -> - `mountPath: /etc/nginx/nginx.conf -> name: nginx-config add subPath: nginx.conf` and save the changes.
 
 Finally the pod should be in running state.
 
