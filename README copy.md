@@ -713,11 +713,11 @@ For this question, please set the context to cluster4 by running:
 On cluster4 we are having some weird issue where we are intermittently getting below error while running kubectl commands.
 
 
-The connection to the server ```cluster4-controlplane:6443`` was refused - did you specify the right host or port?
+The connection to the server ```cluster4-controlplane:6443``` was refused - did you specify the right host or port?
 Whenever you get this error, you can wait for 10-15 seconds to make kubectl command work again, but it will come again after few second
 
 
-We also noticed that ```kube-controller-manager-cluster4-controlplane`` pod is restarting continuously. Look into the issue and troubleshoot the same.
+We also noticed that ```kube-controller-manager-cluster4-controlplane``` pod is restarting continuously. Look into the issue and troubleshoot the same.
 
 
 You can SSH into the cluster4 using ssh cluster4-controlplane command.
